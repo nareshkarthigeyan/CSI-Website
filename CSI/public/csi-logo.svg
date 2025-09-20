@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Colorful gradient for C -->
+    <radialGradient id="gradientC" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#f7931e;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e44ad;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Colorful gradient for S -->
+    <radialGradient id="gradientS" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#9b59b6;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#1abc9c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Colorful gradient for I -->
+    <linearGradient id="gradientI" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a085;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2980b9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e44ad;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Letter C -->
+  <path d="M 50 40 C 30 40 15 55 15 75 L 15 125 C 15 145 30 160 50 160 L 70 160 L 70 140 L 50 140 C 42 140 35 133 35 125 L 35 75 C 35 67 42 60 50 60 L 70 60 L 70 40 Z" fill="url(#gradientC)" />
+  
+  <!-- Letter S -->
+  <path d="M 95 40 L 95 60 L 125 60 C 133 60 140 67 140 75 C 140 83 133 90 125 90 L 105 90 C 85 90 70 105 70 125 C 70 145 85 160 105 160 L 135 160 L 135 140 L 105 140 C 97 140 90 133 90 125 C 90 117 97 110 105 110 L 125 110 C 145 110 160 95 160 75 C 160 55 145 40 125 40 Z" fill="url(#gradientS)" />
+  
+  <!-- Letter I -->
+  <rect x="175" y="40" width="20" height="120" fill="url(#gradientI)" />
+</svg>

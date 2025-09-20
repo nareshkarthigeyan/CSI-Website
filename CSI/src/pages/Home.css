@@ -1,0 +1,266 @@
+/* Home.css */
+.home {
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--tertiary-color) 100%);
+  color: white;
+  padding: 4.5rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.event-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.event-details {
+  margin: 2rem 0;
+}
+
+.event-info {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.event-date,
+.event-venue {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.tagline {
+  font-size: 1.125rem;
+  margin: 2rem 0;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--tertiary-color) 0%, var(--accent-color) 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(26, 188, 156, 0.25);
+  border: none;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(26, 188, 156, 0.35);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+.cta-button.secondary:hover {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 8px 25px var(--shadow-medium);
+}
+
+.about-event {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.about-event h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.event-description {
+  font-size: 1rem;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  color: var(--text-secondary);
+}
+
+.event-highlights h3 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: var(--text-primary);
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.activity-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px var(--shadow-light);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+}
+
+.activity-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px var(--shadow-medium);
+  border-top: 4px solid var(--primary-color);
+}
+
+.activity-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.activity-card h4 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.activity-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.organizers {
+  padding: 5rem 0;
+  background: var(--bg-primary);
+}
+
+.organizers h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--text-primary);
+}
+
+.organizers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.organizer-card {
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border-left: 4px solid var(--primary-color);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.organizer-card h4 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.organizer-card p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.organizer-card p:first-of-type {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.cta-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .event-title {
+    font-size: 2rem;
+  }
+
+  .event-info {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .event-date,
+  .event-venue {
+    font-size: 1rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .activities-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .organizers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 3rem 0;
+  }
+
+  .about-event,
+  .organizers {
+    padding: 3rem 0;
+  }
+}

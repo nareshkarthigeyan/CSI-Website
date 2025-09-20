@@ -1,0 +1,341 @@
+/* Registration.css */
+.registration {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.registration-hero {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--tertiary-color) 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.registration-hero h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.registration-hero p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.registration-form-section {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.registration-form {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-light);
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--shadow-light);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.error-message {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.activity-selection {
+  grid-column: 1 / -1;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.activity-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.activity-option:hover {
+  border-color: var(--primary-color);
+  background: var(--bg-secondary);
+}
+
+.activity-option input[type="radio"] {
+  width: auto;
+  margin-bottom: 0.5rem;
+  transform: scale(1.2);
+}
+
+.activity-option input[type="radio"]:checked + .activity-label {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.activity-option:has(input[type="radio"]:checked) {
+  border-color: var(--primary-color);
+  background: var(--bg-secondary);
+  box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+.activity-label {
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.team-required {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.form-help {
+  display: block;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.form-submit {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px var(--shadow-medium);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--shadow-strong);
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--tertiary-color) 100%);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success Page Styles */
+.success-section {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.success-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.success-card h1 {
+  color: var(--tertiary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.success-card > p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.registration-details {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.registration-details h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.registration-details p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.next-steps {
+  background: #e8f4fd;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.next-steps h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.next-steps ul {
+  list-style: none;
+  padding: 0;
+}
+
+.next-steps li {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.next-steps li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--tertiary-color);
+  font-weight: bold;
+}
+
+.register-another-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-another-btn:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .registration-hero h1 {
+    font-size: 2rem;
+  }
+
+  .registration-hero p {
+    font-size: 1rem;
+  }
+
+  .registration-form {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .activities-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .activity-option {
+    padding: 1rem;
+  }
+
+  .success-card {
+    margin: 0 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .success-card h1 {
+    font-size: 2rem;
+  }
+
+  .success-icon {
+    font-size: 4rem;
+  }
+}

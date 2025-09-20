@@ -1,0 +1,294 @@
+/* Events.css */
+.events {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Highlight effect for targeted events */
+.event-card:target {
+  animation: highlight 2s ease-in-out;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--shadow-medium);
+}
+
+@keyframes highlight {
+  0% {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+  }
+  25% {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: var(--primary-color);
+  }
+  100% {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+  }
+}
+
+.events-hero {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--tertiary-color) 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.events-hero h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.events-subtitle {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.events-list {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.event-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px var(--shadow-light);
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px var(--shadow-medium);
+}
+
+.event-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.event-icon {
+  font-size: 2.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.event-basic-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+}
+
+.event-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.duration,
+.team-size {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.event-content {
+  padding: 2.5rem;
+}
+
+.event-description {
+  margin-bottom: 2rem;
+}
+
+.event-description h3,
+.event-rules h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.event-description p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.event-rules {
+  margin-bottom: 2rem;
+}
+
+.event-rules ul {
+  list-style: none;
+  padding: 0;
+}
+
+.event-rules li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.event-rules li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.event-footer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.event-prizes h4,
+.event-coordinator h4 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.prizes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.prize {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.event-coordinator p {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.events-cta {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.events-cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.events-cta p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.25);
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.35);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .events-hero h1 {
+    font-size: 2rem;
+  }
+
+  .events-subtitle {
+    font-size: 1rem;
+  }
+
+  .event-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .event-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 3rem;
+  }
+
+  .event-basic-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .event-meta {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .event-content {
+    padding: 1.5rem;
+  }
+
+  .event-footer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .prizes-list {
+    justify-content: center;
+  }
+
+  .events-list {
+    padding: 3rem 0;
+  }
+
+  .events-cta {
+    padding: 3rem 0;
+  }
+
+  .events-cta h2 {
+    font-size: 2rem;
+  }
+}
