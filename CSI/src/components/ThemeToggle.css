@@ -12,11 +12,15 @@
   backdrop-filter: blur(10px);
   width: 44px;
   height: 44px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: -2px;
 }
 
 .theme-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: scale(1.05) translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .toggle-container {
@@ -30,6 +34,8 @@
 .toggle-icon {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
+  position: relative;
+  top: -1px;
 }
 
 .theme-toggle:hover .toggle-icon {
@@ -40,8 +46,10 @@
 [data-theme="dark"] .theme-toggle {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="dark"] .theme-toggle:hover {
   background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 3px 6px rgba(0, 0, 0, 0.25);
 }

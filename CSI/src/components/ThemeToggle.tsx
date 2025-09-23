@@ -13,7 +13,7 @@ const ThemeToggle = () => {
     >
       <div className="toggle-container">
         <div className="toggle-icon">
-          {theme === 'light' ? '🌙' : '☀️'}
+          {theme === 'light' ? '☀️' : '🌙'}
         </div>
       </div>
     </button>
