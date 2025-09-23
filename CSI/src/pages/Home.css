@@ -18,10 +18,14 @@
 }
 
 .event-title {
-  font-size: 2.25rem;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: white;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .event-details {
@@ -40,9 +44,8 @@
 .event-venue {
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 25px;
-  backdrop-filter: blur(10px);
 }
 
 .tagline {
@@ -132,7 +135,6 @@
   color: inherit;
   cursor: pointer;
   border: 1px solid var(--card-border);
-  backdrop-filter: blur(10px);
 }
 
 .activity-card:hover {
