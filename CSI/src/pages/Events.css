@@ -39,12 +39,14 @@ html {
 }
 
 .events-hero h1 {
+  color: white;
   font-size: 2.25rem;
   margin-bottom: 1rem;
   font-weight: bold;
 }
 
 .events-subtitle {
+  color: white;
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
@@ -95,6 +97,7 @@ html {
 }
 
 .event-basic-info h2 {
+  color: white;
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
   font-weight: bold;
@@ -206,11 +209,13 @@ html {
 }
 
 .events-cta h2 {
+  color: white;
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
 .events-cta p {
+  color: white;
   font-size: 1.2rem;
   margin-bottom: 2rem;
   max-width: 600px;
@@ -247,6 +252,7 @@ html {
   }
 
   .event-header {
+    color: white;
     flex-direction: column;
     text-align: center;
     padding: 1.5rem;
