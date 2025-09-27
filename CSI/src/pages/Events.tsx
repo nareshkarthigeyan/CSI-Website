@@ -143,7 +143,9 @@ const Events = () => {
               <div className="event-content">
                 <div className="event-description">
                   <h3>About</h3>
-                  <p>{event.description}</p>
+                  <div className="about-content">
+                    <p>{event.description}</p>
+                  </div>
                 </div>
 
                 <div className="event-rules">

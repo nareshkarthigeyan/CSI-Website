@@ -124,6 +124,8 @@ html {
 
 .event-description {
   margin-bottom: 2rem;
+  text-align: left;
+  margin-left: 0;
 }
 
 .event-description h3,
@@ -133,21 +135,40 @@ html {
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 0.5rem;
+  text-align: left;
+  padding-left: 0;
 }
 
 .event-description p {
   color: var(--text-secondary);
   line-height: 1.7;
   font-size: 1.1rem;
+  text-align: left;
+  margin-top: 0;
+}
+
+.about-content {
+  /* padding-left: 1.5rem; */
+  position: relative;
+}
+
+.about-content::before {
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
 .event-rules {
   margin-bottom: 2rem;
+  margin-left: 0;
 }
 
 .event-rules ul {
   list-style: none;
   padding: 0;
+  margin-top: 0;
 }
 
 .event-rules li {

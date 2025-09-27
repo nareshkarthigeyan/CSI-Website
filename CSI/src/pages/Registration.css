@@ -110,14 +110,14 @@
 
 .activity-option {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   padding: 1.5rem;
   border: 2px solid var(--border-color);
   border-radius: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-align: center;
+  text-align: left;
 }
 
 .activity-option:hover {
@@ -127,8 +127,8 @@
 
 .activity-option input[type="radio"] {
   width: auto;
-  margin-right: 1rem;
-  margin-bottom: 0.5rem;
+  margin-right: 0.75rem;
+  margin-top: 0.3rem;
   transform: scale(1.2);
 }
 
@@ -146,13 +146,19 @@
 .activity-label {
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0;
+  display: inline-block;
+  position: relative;
+  top: -2px;
 }
 
 .team-required {
   font-size: 0.8rem;
   color: var(--text-light);
   font-style: italic;
+  margin-left: 0.5rem;
+  position: relative;
+  top: -2px;
 }
 
 .form-help {
@@ -327,6 +333,7 @@
 
   .activity-option {
     padding: 1rem;
+    flex-direction: row;
   }
 
   .success-card {
