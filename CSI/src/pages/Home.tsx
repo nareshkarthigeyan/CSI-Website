@@ -86,25 +86,39 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Organizers Section */}
+      {/* Organizers / Coordinators Section */}
       <section className="organizers">
         <div className="container">
-          <h2>Event Organizers</h2>
+          <h2>Event Coordinators</h2>
           <div className="organizers-grid">
             <div className="organizer-card">
-              <h4>Dr. Priya Sharma</h4>
-              <p>Event Coordinator</p>
-              <p>Professor, CSE Department</p>
+              <h4>Prof. Lakshmishree M S</h4>
+              <p>CSI Coordinator</p>
+              <p>CIT</p>
             </div>
+
             <div className="organizer-card">
-              <h4>Prof. Rajesh Kumar</h4>
-              <p>Technical Coordinator</p>
-              <p>Associate Professor, ISE Department</p>
+              <h4>Prof. Varalkshmi K V</h4>
+              <p>Ideathon Coordinator</p>
+              <p>Department of CSE</p>
             </div>
+
             <div className="organizer-card">
-              <h4>Dr. Anita Desai</h4>
-              <p>Student Affairs Coordinator</p>
-              <p>Professor, IoT Department</p>
+              <h4>Prof. Raghu P</h4>
+              <p>Tech Symposium &amp; TechQuizz Coordinator</p>
+              <p>Department of ISE</p>
+            </div>
+
+            <div className="organizer-card">
+              <h4>Prof. Anusha</h4>
+              <p>Poster Presentation Coordinator</p>
+              <p>Department of AIML</p>
+            </div>
+
+            <div className="organizer-card">
+              <h4>Prof. Laxmi</h4>
+              <p>Program Repair Coordinator</p>
+              <p>Department of IoT &amp; Cyber Security</p>
             </div>
           </div>
         </div>
