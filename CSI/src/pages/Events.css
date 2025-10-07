@@ -32,31 +32,44 @@ html {
 }
 
 .events-hero {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--tertiary-color) 100%);
-  color: white;
-  padding: 4rem 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 165, 233, 0.06),
+    rgba(37, 99, 235, 0.03)
+  );
+  padding: 3.5rem 0;
   text-align: center;
 }
 
-.events-hero h1 {
-  color: white;
-  font-size: 2.25rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
+/* reveal animation helpers used by useInView */
+.hidden {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
-
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+.events-hero h1 {
+  color: var(--primary-dark);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
 .events-subtitle {
-  color: white;
-  font-size: 1.1rem;
-  max-width: 600px;
+  color: var(--text-secondary);
+  max-width: 720px;
   margin: 0 auto;
-  line-height: 1.6;
-  opacity: 0.9;
 }
 
 .events-list {
   padding: 5rem 0;
-  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--bg-secondary) 0%,
+    var(--bg-primary) 100%
+  );
 }
 
 .event-card {
@@ -76,7 +89,11 @@ html {
 }
 
 .event-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   color: white;
   padding: 1.5rem;
   display: flex;
@@ -84,16 +101,21 @@ html {
   gap: 1.5rem;
 }
 
-.event-icon {
-  font-size: 2.5rem;
-  background: rgba(255, 255, 255, 0.2);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
+.event-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(242, 249, 255, 0.95)
+  );
+  border-radius: 12px;
+  box-shadow: 0 12px 30px var(--shadow-light);
+  margin-bottom: 1.75rem;
+  transition: all 0.22s ease;
+  border: 1px solid var(--card-border);
+}
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px var(--shadow-medium);
 }
 
 .event-basic-info h2 {
@@ -180,7 +202,7 @@ html {
 }
 
 .event-rules li::before {
-  content: '→';
+  content: "→";
   position: absolute;
   left: 0;
   color: var(--primary-color);

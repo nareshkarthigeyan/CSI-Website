@@ -1,41 +1,22 @@
-/* CSI Logo Component */
+/* Minimal CSI Logo - small mark + text */
 .csi-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-weight: 700;
-  font-size: 1.5rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
 }
 
-.csi-logo:hover {
-  transform: scale(1.05);
+.csi-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px; /* very subtle rounding to match header */
 }
 
-.csi-logo-icon {
+/* hero kicker logo (used in hero text areas) */
+.hero-kicker-logo {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #e74c3c 50%, #9b59b6 75%, #1abc9c 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 900;
-  font-size: 1.5rem;
-  letter-spacing: -1px;
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-}
-
-.csi-logo-text {
-  color: var(--primary-color);
-  letter-spacing: 0.5px;
-  font-weight: 700;
-}
-
-.csi-logo-year {
-  color: var(--accent-color);
-  font-weight: 600;
-  font-size: 1.1rem;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 0.6rem;
 }

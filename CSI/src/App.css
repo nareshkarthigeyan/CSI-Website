@@ -1,40 +1,41 @@
 /* Global Styles for CSI Event 2025 - Vibrant Colorful Theme with Dark Mode Support */
 :root {
-  /* Theme Variables - Inspired by CSI Logo */
-  --primary-color: #e74c3c;        /* Vibrant red-orange */
-  --secondary-color: #9b59b6;      /* Purple */
-  --tertiary-color: #1abc9c;       /* Teal */
-  --accent-color: #f39c12;         /* Golden orange */
-  --text-primary: #2c3e50;         /* Dark blue-gray */
-  --text-secondary: #34495e;       /* Medium gray */
-  --text-light: #7f8c8d;           /* Light gray */
-  --bg-primary: #ffffff;           /* Pure white */
-  --bg-secondary: #f8f9fa;         /* Light gray */
-  --bg-tertiary: #ecf0f1;          /* Very light gray */
-  --border-color: #e9ecef;         /* Light border */
-  --shadow-light: rgba(231, 76, 60, 0.08);
-  --shadow-medium: rgba(231, 76, 60, 0.15);
-  --shadow-strong: rgba(231, 76, 60, 0.25);
-  --card-bg: rgba(255, 255, 255, 0.9);
-  --card-border: rgba(233, 236, 239, 0.8);
+  /* Blue Tech Event Theme */
+  --primary-color: #0ea5e9; /* Sky Blue */
+  --primary-dark: #0369a1; /* Deep Blue */
+  --secondary-color: #2563eb; /* Royal Blue */
+  --tertiary-color: #60a5fa; /* Light Blue */
+  --accent-color: #06b6d4; /* Cyan Accent */
+  --text-primary: #0f172a; /* Very dark blue */
+  --text-secondary: #334155; /* Muted slate */
+  --text-light: #64748b; /* Light slate */
+  --bg-primary: #f8fbff; /* Soft off-white */
+  --bg-secondary: #f1f9ff; /* Pale blue */
+  --bg-tertiary: #e6f3ff; /* Very pale blue */
+  --border-color: #e6f0fb; /* Light border */
+  --shadow-light: rgba(14, 165, 233, 0.06);
+  --shadow-medium: rgba(14, 165, 233, 0.12);
+  --shadow-strong: rgba(3, 105, 161, 0.18);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(226, 240, 255, 0.9);
 
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --text-primary: #ecf0f1;         /* Light gray */
-  --text-secondary: #bdc3c7;       /* Medium light gray */
-  --text-light: #95a5a6;           /* Gray */
-  --bg-primary: #1a1a2e;           /* Dark navy */
-  --bg-secondary: #16213e;         /* Darker navy */
-  --bg-tertiary: #2c3e50;          /* Blue-gray */
-  --border-color: #34495e;         /* Border gray */
+  --text-primary: #ecf0f1; /* Light gray */
+  --text-secondary: #bdc3c7; /* Medium light gray */
+  --text-light: #95a5a6; /* Gray */
+  --bg-primary: #1a1a2e; /* Dark navy */
+  --bg-secondary: #16213e; /* Darker navy */
+  --bg-tertiary: #2c3e50; /* Blue-gray */
+  --border-color: #34495e; /* Border gray */
   --shadow-light: rgba(0, 0, 0, 0.3);
   --shadow-medium: rgba(0, 0, 0, 0.4);
   --shadow-strong: rgba(0, 0, 0, 0.6);
   --card-bg: rgba(44, 62, 80, 0.8);
   --card-border: rgba(52, 73, 94, 0.8);
-  
+
   color-scheme: dark;
 }
 
@@ -52,7 +53,9 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-primary);
@@ -65,16 +68,23 @@ body {
 
 /* Subtle background pattern for elegance */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(155, 89, 182, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(26, 188, 156, 0.02) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 10% 20%,
+      rgba(14, 165, 233, 0.035) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(37, 99, 235, 0.03) 0%,
+      transparent 35%
+    ),
+    linear-gradient(180deg, rgba(14, 165, 233, 0.02), rgba(37, 99, 235, 0.02));
   pointer-events: none;
   z-index: -1;
 }
@@ -98,15 +108,20 @@ button {
 a {
   color: var(--primary-color);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.22s ease;
 }
 
 a:hover {
-  color: var(--secondary-color);
+  color: var(--primary-dark);
 }
 
 /* Typography with modern spacing */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -147,45 +162,77 @@ p {
   backdrop-filter: blur(20px);
   border: 1px solid var(--card-border);
   border-radius: 20px;
-  box-shadow: 
-    0 4px 6px -1px var(--shadow-medium),
+  box-shadow: 0 4px 6px -1px var(--shadow-medium),
     0 2px 4px -1px var(--shadow-light);
   transition: all 0.3s ease;
 }
 
 .modern-card:hover {
   transform: translateY(-4px);
-  box-shadow: 
-    0 20px 25px -5px var(--shadow-strong),
+  box-shadow: 0 20px 25px -5px var(--shadow-strong),
     0 10px 10px -5px var(--shadow-light);
 }
 
 /* Utility classes */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+.mb-2 {
+  margin-bottom: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+.mb-4 {
+  margin-bottom: 2rem;
+}
 
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 1.5rem;
+}
+.mt-4 {
+  margin-top: 2rem;
+}
 
 /* Modern gradient backgrounds */
 .gradient-primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--tertiary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color) 0%,
+    var(--tertiary-color) 100%
+  );
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, var(--tertiary-color) 0%, var(--accent-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--tertiary-color) 0%,
+    var(--accent-color) 100%
+  );
 }
 
 /* Responsive utilities */
@@ -193,20 +240,32 @@ p {
   .container {
     padding: 0 16px;
   }
-  
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.125rem; }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.125rem;
+  }
 }
 
 @media (max-width: 480px) {
   .container {
     padding: 0 12px;
   }
-  
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.25rem; }
-  h3 { font-size: 1rem; }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  h3 {
+    font-size: 1rem;
+  }
 }
 
 /* Smooth scrolling */
@@ -234,8 +293,12 @@ html {
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .fade-in-up {
@@ -260,19 +323,23 @@ html {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 70%
+  );
   color: white;
-  box-shadow: 0 4px 14px 0 rgba(231, 76, 60, 0.25);
+  box-shadow: 0 6px 20px 0 rgba(14, 165, 233, 0.14);
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px 0 rgba(231, 76, 60, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px 0 rgba(3, 105, 161, 0.2);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(231, 76, 60, 0.2);
+  background: rgba(14, 165, 233, 0.16);
   color: var(--text-primary);
 }
 
@@ -286,10 +353,18 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  border-radius: 3px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--secondary-color), var(--tertiary-color));
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color),
+    var(--tertiary-color)
+  );
 }
