@@ -217,6 +217,43 @@ html {
   border-top: 1px solid #eee;
 }
 
+/* three column layout for prizes | faculty | students */
+.event-footer.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+}
+
+
+
+.event-students h4 {
+  margin-bottom: 0.8rem;
+}
+
+.student-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.student-list li {
+  margin-bottom: 0.8rem;
+}
+
+.student-entry .student-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.student-entry .student-email {
+  color: var(--primary-color);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.student-entry .student-email:hover {
+  text-decoration: underline;
+}
+
 .event-prizes h4,
 .event-coordinator h4 {
   font-size: 1.2rem;
@@ -320,13 +357,32 @@ html {
     padding: 1.5rem;
   }
 
-  .event-footer {
+  /* Ensure three-col footer collapses to a single column on phones */
+  .event-footer,
+  .event-footer.three-col {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
   .prizes-list {
     justify-content: center;
+    /* On mobile show prizes stacked vertically for readability */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Make each prize chip block-level and slightly narrower on phones */
+  .prize {
+    display: block;
+    width: 160px;
+    max-width: 60%;
+    text-align: left;
+    padding: 0.8rem 1rem;
+  }
+
+  /* Allow long emails/phones to wrap cleanly */
+  .student-entry {
+    word-break: break-word;
   }
 
   .events-list {
@@ -339,5 +395,15 @@ html {
 
   .events-cta h2 {
     font-size: 2rem;
+  }
+}
+
+/* Tablet / small-laptop: make prizes span full width and show faculty + students side-by-side */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .event-footer.three-col {
+    grid-template-columns: 1fr 1fr;
+  }
+  .event-prizes {
+    grid-column: 1 / -1; /* prizes take full row on tablets */
   }
 }

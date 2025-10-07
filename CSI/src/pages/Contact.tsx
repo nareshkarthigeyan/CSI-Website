@@ -8,6 +8,10 @@ const Contact = () => {
       position: "Professor, CSE Department",
       phone: "+91-98765-43210",
       email: "priya.sharma@cambridge.edu.in",
+      studentCoordinators: [
+        { name: 'K. Lakshmi Navyatha', phone: '+91 9980609374', email: 'navyatha.ise23@cambridge.edu.in' },
+        { name: 'Spandana S', phone: '+91 8073875184', email: 'spandana.23ise@cambridge.edu.in' }
+      ]
     },
     {
       activity: "Ideathon",
@@ -15,6 +19,10 @@ const Contact = () => {
       position: "Associate Professor, ISE Department",
       phone: "+91-98765-43211",
       email: "rajesh.kumar@cambridge.edu.in",
+      studentCoordinators: [
+        { name: 'Abhishek Pattar', phone: '+91 9916265862', email: 'abhishek.24cse@cambridge.edu.in' },
+        { name: 'Swati', phone: '+91 6361451537', email: 'swati.23cse@cambridge.edu.in' }
+      ]
     },
     {
       activity: "TechQuizz",
@@ -22,6 +30,10 @@ const Contact = () => {
       position: "Professor, IoT Department",
       phone: "+91-98765-43212",
       email: "anita.desai@cambridge.edu.in",
+      studentCoordinators: [
+        { name: 'Limnisha Sanjana T G', phone: '+91 9731166553', email: 'limnisha.23ise@cambridge.edu.in' },
+        { name: 'Limnisha', phone: '+91 9606077664', email: 'limnisha.23ise@cambridge.edu.in' }
+      ]
     },
     {
       activity: "Poster Presentation",
@@ -29,6 +41,10 @@ const Contact = () => {
       position: "Associate Professor, AIML Department",
       phone: "+91-98765-43213",
       email: "suresh.patel@cambridge.edu.in",
+      studentCoordinators: [
+        { name: 'Shreya V', phone: '+91 6360516101', email: 'shreya.23aiml@cambridge.edu.in' },
+        { name: 'Jaijan S', phone: '+91 9538045415', email: 'jaijan.23aiml@cambridge.edu.in' }
+      ]
     },
     {
       activity: "Program Repair (Code Debugging)",
@@ -36,16 +52,20 @@ const Contact = () => {
       position: "Assistant Professor, CSE Department",
       phone: "+91-98765-43214",
       email: "kavya.reddy@cambridge.edu.in",
+      studentCoordinators: [
+        { name: 'Naga Tejaswini', phone: '+91 7204023676', email: 'tejaswini.23iot@cambridge.edu.in' },
+        { name: 'Naresh Karthigeyan', phone: '+91 7676661396', email: 'naresh.23iot@cambridge.edu.in' }
+      ]
     },
   ];
 
   const generalContacts = [
     {
       title: "Event Coordinator",
-      name: "Dr. Priya Sharma",
-      position: "Professor & Head, CSE Department",
-      phone: "+91-98765-43210",
-      email: "csi.coordinator@cambridge.edu.in",
+      name: "Himanshu Verma (Main coordinator)",
+      position: "Student Coordinator",
+      phone: "+91-XXXXXXXXXX",
+      email: "himanshu.22cse@cambridge.edu.in",
     },
     {
       title: "Registration Support",
@@ -61,6 +81,29 @@ const Contact = () => {
       phone: "+91-98765-43216",
       email: "tech.support@cambridge.edu.in",
     },
+  ];
+
+  const studentList = [
+    { name: 'Himanshu Verma', usn: '1CD22CS048', branch: 'CSE', semester: '7', email: 'himanshu.22cse@cambridge.edu.in' },
+    { name: 'Naga Tejaswini', usn: '1CD23IC034', branch: 'IC', semester: '5', email: 'tejaswini.23iot@cambridge.edu.in' },
+    { name: 'Naresh Karthigeyan', usn: '1CD23IC026', branch: 'IC', semester: '5', email: 'naresh.23iot@cambridge.edu.in' },
+    { name: 'Limnisha', usn: '1CD23IS080', branch: 'ISE', semester: '5', email: 'limnisha.23ise@cambridge.edu.in' },
+    { name: 'Sanjana T G', usn: '1CD23IS145', branch: 'ISE', semester: '5', email: 'sanjana.23ise@cambridge.edu.in' },
+    { name: 'K.Lakshmi Navyatha', usn: '1CD23IS068', branch: 'ISE', semester: '5', email: 'navyatha.ise23@cambridge.edu.in' },
+    { name: 'Spandana S', usn: '1CD23IS166', branch: 'ISE', semester: '5', email: 'spandana.23ise@cambridge.edu.in' },
+    { name: 'Prema B Malipatil', usn: '1CD23IS114', branch: 'ISE', semester: '5', email: 'prema.23ise@cambridge.edu.in' },
+    { name: 'Yukthi M', usn: '1CD23CS200', branch: 'CSE', semester: '5', email: 'yukthim.23cse@cambridge.edu.in' },
+    { name: 'Abhishek Pattar', usn: '1CD24CS400', branch: 'CSE', semester: '5', email: 'abhishek.24cse@cambridge.edu.in' },
+    { name: 'Gururaj B K', usn: '1CD23CS052', branch: 'CSE', semester: '5', email: 'gururaj.23cse@cambridge.edu.in' },
+    { name: 'Swati', usn: '1CD23CS173', branch: 'CSE', semester: '5', email: 'swati.23cse@cambridge.edu.in' },
+    { name: 'Jeevan L', usn: '1CD23CS065', branch: 'CSE', semester: '5', email: 'jeevanl.23cse@cambridge.edu.in' },
+    { name: 'Vivek Upadhayay', usn: '1CD23CS195', branch: 'CSE', semester: '5', email: 'vivek.23cse@cambridge.edu.in' },
+    { name: 'Jaijan S', usn: '1CD23AI045', branch: 'AIML', semester: '5', email: 'jaijan.23aiml@cambridge.edu.in' },
+    { name: 'Shreya V', usn: '1CD23AI098', branch: 'AIML', semester: '5', email: 'shreya.23aiml@cambridge.edu.in' },
+    { name: 'Shushmita', usn: '1CD23AI127', branch: 'AIML', semester: '5', email: 'sushmitha.23eee@cambridge.edu.in' },
+    { name: 'Yamini', usn: '1CD23AI125', branch: 'AIML', semester: '5', email: 'yamini.23aiml@cambridge.edu.in' },
+    { name: 'Mayyoga', usn: '1CD23IS091', branch: 'ISE', semester: '5', email: 'mayooga.23ise@cambridge.edu.in' },
+    { name: 'M Tarani Lakshmi', usn: '1CD23IS082', branch: 'ISE', semester: '5', email: 'taranilakshmi.23ise@cambridge.edu.in' }
   ];
 
   return (
@@ -220,6 +263,25 @@ const Contact = () => {
                 <p className="availability">For quick queries and updates</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Student Coordinators Directory */}
+      <section className="student-coordinators">
+        <div className="container">
+          <h2>Student Coordinators</h2>
+          <p className="section-description">Contact details for student coordinators</p>
+          <div className="students-grid">
+            {studentList.map((s, idx) => (
+              <div key={idx} className="student-card">
+                <h4>{s.name}</h4>
+                <p><strong>USN:</strong> {s.usn}</p>
+                <p><strong>Branch:</strong> {s.branch}</p>
+                <p><strong>Semester:</strong> {s.semester}</p>
+                <p><a href={`mailto:${s.email}`}>{s.email}</a></p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

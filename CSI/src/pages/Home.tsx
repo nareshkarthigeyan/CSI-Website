@@ -81,16 +81,13 @@ const Home: React.FC = () => {
             </h1>
 
             <p className="hero-sub">
-              October 11, 2025 • Cambridge Institute of Technology — a full day
+              October 18, 2025 • Cambridge Institute of Technology — a full day
               of ideation, competition and career connections.
             </p>
 
             <div className="center">
               <Link to="/registration" className="btn btn-hero">
                 Register Now
-              </Link>
-              <Link to="/events" className="btn btn-ghost">
-                See Events
               </Link>
             </div>
 
@@ -114,6 +111,7 @@ const Home: React.FC = () => {
                 <span>Participants</span>
               </li>
             </ul>
+            <p className="last-registration">Last registration date: <strong>16 October 2025</strong></p>
           </div>
 
           {/* right decorative logo removed from DOM — it's now a CSS background */}

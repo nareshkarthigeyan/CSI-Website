@@ -13,10 +13,24 @@ const Events = () => {
       const elementId = location.hash.replace("#", "");
       const element = document.getElementById(elementId);
       if (element) {
-        setTimeout(() => {
-          const elementPosition = element.offsetTop - 100;
-          window.scrollTo({ top: elementPosition, behavior: "smooth" });
-        }, 200);
+        // element exists now — scroll to it with a small offset for header
+        const elementPosition = element.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 100;
+        window.scrollTo({ top: elementPosition, behavior: "smooth" });
+      } else {
+        // If element isn't present yet (rare when navigating between routes), poll briefly until it's rendered
+        const maxAttempts = 40; // ~2s at 50ms intervals
+        let attempts = 0;
+        const tryScroll = () => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            const pos = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 100;
+            window.scrollTo({ top: pos, behavior: "smooth" });
+          } else if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(tryScroll, 50);
+          }
+        };
+        tryScroll();
       }
     }
   }, [location]);
@@ -39,8 +53,12 @@ const Events = () => {
         "Original work only - plagiarism will result in disqualification",
         "Judging based on innovation, technical depth, and presentation skills",
       ],
-      prizes: ["Winner: ₹4000", "1st Runner-up: ₹2500", "2nd Runner-up: ₹1500"],
+      prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Raghu P",
+      studentCoordinators: [
+        { name: 'K. Lakshmi Navyatha', phone: '+91 9980609374', email: 'navyatha.ise23@cambridge.edu.in' },
+        { name: 'Spandana S', phone: '+91 8073875184', email: 'spandana.23ise@cambridge.edu.in' }
+      ]
     },
 
     {
@@ -58,8 +76,12 @@ const Events = () => {
         "Final presentation: 15 minutes pitch + demo",
         "Internet access and external libraries are allowed",
       ],
-      prizes: ["Winner: ₹6000", "1st Runner-up: ₹3500", "2nd Runner-up: ₹2000"],
+      prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Varalkshmi K V",
+      studentCoordinators: [
+        { name: 'Abhishek Pattar', phone: '+91 9916265862', email: 'abhishek.24cse@cambridge.edu.in' },
+        { name: 'Swati', phone: '+91 6361451537', email: 'swati.23cse@cambridge.edu.in' }
+      ]
     },
 
     {
@@ -77,8 +99,12 @@ const Events = () => {
         "Negative marking for wrong answers in final rounds",
         "Top teams from prelims qualify for finals",
       ],
-      prizes: ["Winner: ₹3000", "1st Runner-up: ₹1500", "2nd Runner-up: ₹800"],
+      prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Varalkshmi K V",
+      studentCoordinators: [
+        { name: 'Limnisha Sanjana T G', phone: '+91 9731166553', email: 'limnisha.23ise@cambridge.edu.in' },
+        { name: 'Limnisha', phone: '+91 9606077664', email: 'limnisha.23ise@cambridge.edu.in' }
+      ]
     },
 
     {
@@ -96,8 +122,12 @@ const Events = () => {
         "5 minutes presentation + 3 minutes Q&A per poster",
         "Judging based on content quality, design, and presentation",
       ],
-      prizes: ["Winner: ₹2500", "1st Runner-up: ₹1200", "2nd Runner-up: ₹700"],
+      prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Anusha",
+      studentCoordinators: [
+        { name: 'Shreya V', phone: '+91 6360516101', email: 'shreya.23aiml@cambridge.edu.in' },
+        { name: 'Jaijan S', phone: '+91 9538045415', email: 'jaijan.23aiml@cambridge.edu.in' }
+      ]
     },
 
     {
@@ -115,8 +145,12 @@ const Events = () => {
         "Partial marking for partially correct solutions",
         "No internet access except for language documentation",
       ],
-      prizes: ["Winner: ₹3000", "1st Runner-up: ₹1500"],
+      prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Laxmi",
+      studentCoordinators: [
+        { name: 'Naga Tejaswini', phone: '+91 7204023676', email: 'tejaswini.23iot@cambridge.edu.in' },
+        { name: 'Naresh Karthigeyan', phone: '+91 7676661396', email: 'naresh.23iot@cambridge.edu.in' }
+      ]
     },
   ];
 
@@ -190,7 +224,7 @@ const Events = () => {
                   </ul>
                 </div>
 
-                <div className="event-footer">
+                <div className="event-footer three-col">
                   <div className="event-prizes">
                     <h4>Prizes</h4>
                     <div className="prizes-list">
@@ -202,9 +236,32 @@ const Events = () => {
                     </div>
                   </div>
 
-                  <div className="event-coordinator">
-                    <h4>Event Coordinator</h4>
+                  <div className="event-faculty">
+                    <h4>Faculty Coordinator</h4>
                     <p>{event.coordinator}</p>
+                  </div>
+
+                  <div className="event-students">
+                    <h4>Student Coordinators</h4>
+                    {event.studentCoordinators && (
+                      <div className="student-list">
+                        <ul>
+                          {event.studentCoordinators.map((sc, i) => (
+                            <li key={i}>
+                              <div className="student-entry">
+                                <span className="student-name">
+                                  {sc.name} — <a href={`tel:${sc.phone}`}>{sc.phone}</a>
+                                </span>
+                                <br />
+                                <a className="student-email" href={`mailto:${sc.email}`}>
+                                  {sc.email}
+                                </a>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
