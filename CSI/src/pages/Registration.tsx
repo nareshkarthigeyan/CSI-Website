@@ -44,7 +44,7 @@ const Registration = () => {
     { id: "ideathon", name: "Ideathon", requiresTeam: true },
     { id: "tech-quiz", name: "Technical Quiz", requiresTeam: false },
     { id: "poster", name: "Poster Presentation", requiresTeam: false },
-    { id: "debugging", name: "Code Debugging", requiresTeam: false },
+    { id: "programming-contest", name: "Programming Contest", requiresTeam: false },
   ];
 
   const handleInputChange = (

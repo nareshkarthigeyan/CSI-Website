@@ -204,7 +204,7 @@ function KeyActivities() {
             "Ideathon",
             "TechQuizz",
             "Poster Presentation",
-            "Program Repair (Code Debugging)",
+            "Programming Contest (Multi-round)",
           ].map((name, i) => (
             <div key={i} className="activity-item">
               <h3>{name}</h3>

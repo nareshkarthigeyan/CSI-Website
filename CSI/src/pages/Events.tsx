@@ -131,19 +131,19 @@ const Events = () => {
     },
 
     {
-      id: "program-repair",
-      name: "Program Repair",
+      id: "programming-contest",
+      name: "Programming Contest",
       icon: "",
-      duration: "2 hours",
+      duration: "Varied (3 rounds)",
       teamSize: "Individual",
       description:
-        "A focused coding challenge to debug, optimize, and fix logical/programmatic issues in provided code snippets. Tests are automated through an online judge.",
+        "The Flagship Event of CSI CIT Chapter. Like the world-renowned Inter-Collegiate Programming Contest (ICPC), it is a multi-round programming contest designed to test problem solving across beginner to very hard levels. Rounds include Beginner, Intermediate, and Hard see rules below.",
       rules: [
-        "Multiple programming languages supported (C++, Java, Python)",
-        "Problems include syntax errors, logical bugs, and optimization challenges",
-        "Online judge system for automatic evaluation",
-        "Partial marking for partially correct solutions",
-        "No internet access except for language documentation",
+        "Round 1: Beginner: 45 mins, 5 problems, 10 pts each, passing threshold 30 pts (qualify to Round 2)",
+        "Round 2: Intermediate: 60 mins, 4 problems, partial scoring (10/20), wrong-submission penalty -2 per test file, passing threshold 60 pts",
+        "Round 3: Hard: 90 mins, 3 problems (from pool of 5), partial & bonus scoring (15/35 + up to 10 bonus), wrong-submission penalty -5 per test file; tie-break by lower total AC time",
+        "Submission guidelines: file naming <ContestID>.<ext>, use only standard libraries, judge returns immediate verdicts (AC/WA/TLE/RE/CE).",
+        "Ranking: total score minus penalties; tiebreaker by lower cumulative AC time; final leaderboard published within 30 minutes after Round 3",
       ],
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Laxmi",

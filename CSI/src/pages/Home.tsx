@@ -31,10 +31,11 @@ const activities = [
     description: "Showcase your research",
   },
   {
-    id: "code-debugging",
-    name: "Program Repair",
+    id: "programming-contest",
+    name: "Programming Contest",
     icon: "",
-    description: "Code debugging challenge",
+    description:
+      "A multi-round programming contest.",
   },
 ];
 
@@ -52,7 +53,9 @@ const ActivityCard: React.FC<{ activity: (typeof activities)[number] }> = ({
         <div className="activity-icon">{activity.icon}</div>
         <h4>{activity.name}</h4>
         <p>{activity.description}</p>
-        <div className="card-cta" aria-hidden="true">Learn more →</div>
+        <div className="card-cta" aria-hidden="true">
+          Learn more →
+        </div>
       </Link>
     </div>
   );
@@ -111,7 +114,9 @@ const Home: React.FC = () => {
                 <span>Participants</span>
               </li>
             </ul>
-            <p className="last-registration">Last registration date: <strong>16 October 2025</strong></p>
+            <p className="last-registration">
+              Last registration date: <strong>16 October 2025</strong>
+            </p>
           </div>
 
           {/* right decorative logo removed from DOM — it's now a CSS background */}
@@ -184,7 +189,7 @@ const Home: React.FC = () => {
 
             <div className="organizer-card">
               <h4>Prof. Laxmi</h4>
-              <p>Program Repair Coordinator</p>
+              <p>Programming Contest Coordinator</p>
               <p>Department of IoT &amp; Cyber Security</p>
             </div>
           </div>
