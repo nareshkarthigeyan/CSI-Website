@@ -1,4 +1,5 @@
 import "./Contact.css";
+import React, { useEffect, useRef, useState } from "react";
 import useInView from "../hooks/useInView";
 
 type Student = {
@@ -60,6 +61,41 @@ const WhatsAppIcon = () => (
 
 const CoordinatorCard: React.FC<{ coordinator: Coordinator }> = ({ coordinator }) => {
   const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.12 });
+
+  // Email overflow detection
+  const emailRef = useRef<HTMLSpanElement | null>(null);
+  const [isOverflow, setIsOverflow] = useState(false);
+  const [scrollPx, setScrollPx] = useState(0);
+
+  useEffect(() => {
+    const el = emailRef.current;
+    if (!el) return;
+    const containerWidth = el.parentElement ? el.parentElement.clientWidth : el.clientWidth;
+    const contentWidth = el.scrollWidth;
+    if (contentWidth > containerWidth) {
+      setIsOverflow(true);
+      setScrollPx(contentWidth - containerWidth + 24); // small padding
+    } else {
+      setIsOverflow(false);
+      setScrollPx(0);
+    }
+
+    const onResize = () => {
+      const cw = el.parentElement ? el.parentElement.clientWidth : el.clientWidth;
+      const sw = el.scrollWidth;
+      if (sw > cw) {
+        setIsOverflow(true);
+        setScrollPx(sw - cw + 24);
+      } else {
+        setIsOverflow(false);
+        setScrollPx(0);
+      }
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [coordinator.email]);
+
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
@@ -85,7 +121,17 @@ const CoordinatorCard: React.FC<{ coordinator: Coordinator }> = ({ coordinator }
             {coordinator.email && (
               <div className="contact-item">
                 <span className="contact-icon"><EmailIcon /></span>
-                <a href={`mailto:${coordinator.email}`}>{coordinator.email}</a>
+                <div className="email-wrap" style={isOverflow ? ({
+                  ['--scroll']: `-${scrollPx}px`,
+                  ['--duration']: `${Math.max(6, Math.round(scrollPx / 30))}s`,
+                } as React.CSSProperties) : undefined}>
+                  <span
+                    ref={emailRef}
+                    className={`email-text ${isOverflow ? "scrolling" : ""}`}
+                  >
+                    {coordinator.email}
+                  </span>
+                </div>
               </div>
             )}
             {coordinator.studentCoordinators && (
@@ -191,6 +237,15 @@ const Contact = () => {
       studentCoordinators: [],
     },
     {
+      activity: "Main Coordinator",
+      name: "Himanshu Verma",
+      position: "Student Coordinator",
+      department: "CIT",
+      email: "himanshu.22cse@cambridge.edu.in",
+      phone: "+91 70000 00000",
+      studentCoordinators: [],
+    },
+    {
       activity: "Ideathon",
       name: "Prof. Varalkshmi K V",
       position: "Ideathon Coordinator",
@@ -204,6 +259,8 @@ const Contact = () => {
       name: "Prof. Raghu P",
       position: "Tech Symposium & TechQuizz Coordinator",
       department: "Department of ISE",
+      phone: "+91 91648 84137",
+      email: "raghu.ise@cambridge.edu.in",
       studentCoordinators: [],
     },
     {
@@ -221,6 +278,7 @@ const Contact = () => {
       position: "Programming Contest Coordinator",
       department: "Department of IoT & Cyber Security",
       email: "laxmi.iotcs@cambridge.edu.in",
+      phone: "+91 89715 33373",
       studentCoordinators: [],
     },
   ];
@@ -235,17 +293,17 @@ const Contact = () => {
     },
     {
       title: "Registration Support",
-      name: "Ms. Sneha Agarwal",
-      position: "Administrative Officer",
-      phone: "+91-98765-43215",
-      email: "registration@cambridge.edu.in",
+      name: "Naresh Karthigeyan",
+      position: "Registration Support",
+      phone: "+91 7676661396",
+      email: "naresh.23iot@cambridge.edu.in",
     },
     {
-      title: "Technical Support",
-      name: "Mr. Arjun Mehta",
-      position: "IT Administrator",
-      phone: "+91-98765-43216",
-      email: "tech.support@cambridge.edu.in",
+      title: "Operations Support",
+      name: "Gururaj B K",
+      position: "Operations Support",
+      phone: "+91 86607 63251",
+      email: "gururaj.23cse@cambridge.edu.in",
     },
   ];
 
@@ -290,9 +348,17 @@ const Contact = () => {
             Connect with the coordinators for specific event activities
           </p>
           <div className="coordinators-grid">
-            {coordinators.map((coordinator, index) => (
-              <CoordinatorCard key={index} coordinator={coordinator} />
-            ))}
+            <div className="coordinators-top">
+              {coordinators.slice(0, 2).map((coordinator, index) => (
+                <CoordinatorCard key={index} coordinator={coordinator} />
+              ))}
+            </div>
+
+            <div className="coordinators-bottom">
+              {coordinators.slice(2).map((coordinator, index) => (
+                <CoordinatorCard key={index + 2} coordinator={coordinator} />
+              ))}
+            </div>
           </div>
         </div>
       </section>

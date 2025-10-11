@@ -53,10 +53,30 @@
 
 .coordinators-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.coordinators-top {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.coordinators-top .coordinator-card {
+  flex: 1 1 420px;
+  max-width: 520px;
+}
+
+.coordinators-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 1.25rem;
 }
 
 .coordinator-card {
@@ -151,6 +171,33 @@
   text-decoration: none;
   font-weight: 500;
   flex: 1;
+}
+
+/* Email overflow sliding */
+.email-wrap {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+}
+
+.email-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform var(--duration, 10s) linear;
+}
+
+.email-text.scrolling {
+  animation: slide-left var(--duration, 10s) linear infinite;
+  transform: translateX(var(--scroll, 0));
+}
+
+@keyframes slide-left {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(0); }
+  90% { transform: translateX(var(--scroll, 0)); }
+  100% { transform: translateX(var(--scroll, 0)); }
 }
 
 .contact-item a:hover {

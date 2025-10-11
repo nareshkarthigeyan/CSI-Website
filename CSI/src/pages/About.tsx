@@ -147,7 +147,7 @@ function PurposeSection() {
       <div className="container">
         <h2>Purpose of the Event</h2>
         <div className="purpose-grid">
-          <div className="purpose-card">
+          <div className="purpose-card bento">
             <div className="purpose-icon">Innovation</div>
             <h3>Encourage Innovation</h3>
             <p>
@@ -155,7 +155,7 @@ function PurposeSection() {
               technological challenges
             </p>
           </div>
-          <div className="purpose-card">
+          <div className="purpose-card bento">
             <div className="purpose-icon">Thinking</div>
             <h3>Promote Critical Thinking</h3>
             <p>
@@ -200,15 +200,40 @@ function KeyActivities() {
         <h2>Key Activities Overview</h2>
         <div className="activities-list">
           {[
-            "Tech Symposium (Pick & Speak)",
-            "Ideathon",
-            "TechQuizz",
-            "Poster Presentation",
-            "Programming Contest (Multi-round)",
-          ].map((name, i) => (
-            <div key={i} className="activity-item">
-              <h3>{name}</h3>
-              <p />
+            {
+              id: "tech-symposium",
+              name: "Tech Symposium (Pick & Speak)",
+              description:
+                "Short 5–7 minute presentations where participants present ideas on emerging technologies. Judged on clarity, originality and delivery.",
+            },
+            {
+              id: "ideathon",
+              name: "Ideathon",
+              description:
+                "Team-based ideation challenge to propose a feasible product or solution to real-world problems. Teams pitch to judges with a brief mockup or roadmap.",
+            },
+            {
+              id: "tech-quiz",
+              name: "TechQuizz",
+              description:
+                "A fast-paced technical quiz with multiple rounds (prelims, buzzer rounds, and finals) covering programming, algorithms, networks and general CS knowledge.",
+            },
+            {
+              id: "poster-presentation",
+              name: "Poster Presentation",
+              description:
+                "Research and project posters judged on clarity of thought, methodology, results and potential impact. Ideal for students with academic or prototype work.",
+            },
+            {
+              id: "programming-contest",
+              name: "Programming Contest (Multi-round)",
+              description:
+                "A multi-stage contest covering algorithmic problem solving, debugging and team-based coding sprints. Rounds include online qualifier, onsite individual rounds and a final team challenge.",
+            },
+          ].map((act) => (
+            <div key={act.id} className="activity-item">
+              <h3>{act.name}</h3>
+              <p>{act.description}</p>
             </div>
           ))}
         </div>
@@ -232,7 +257,7 @@ function EventReminder() {
         <h2>Event Details</h2>
         <div className="reminder-info">
           <div className="reminder-item">
-            <strong>Date:</strong> October 11, 2025
+            <strong>Date:</strong> October 18, 2025
           </div>
           <div className="reminder-item">
             <strong>Venue:</strong> Cambridge Institute of Technology, Bangalore
@@ -241,7 +266,7 @@ function EventReminder() {
             <strong>Time:</strong> 9:00 AM onwards
           </div>
           <div className="reminder-item">
-            <strong>Registration:</strong> Open until February 10, 2025
+            <strong>Registration:</strong> Open until October 16, 2025
           </div>
         </div>
       </div>

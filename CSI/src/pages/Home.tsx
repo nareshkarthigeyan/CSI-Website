@@ -34,8 +34,7 @@ const activities = [
     id: "programming-contest",
     name: "Programming Contest",
     icon: "",
-    description:
-      "A multi-round programming contest.",
+    description: "A multi-round programming contest.",
   },
 ];
 
@@ -163,34 +162,48 @@ const Home: React.FC = () => {
         <div className="container">
           <h2>Event Coordinators</h2>
           <div className="organizers-grid">
-            <div className="organizer-card">
-              <h4>Prof. Lakshmishree M S</h4>
-              <p>CSI Coordinator</p>
-              <p>CIT</p>
+            <div className="organizers-top">
+              <div className="organizer-card">
+                <h4>Prof. Lakshmishree MS</h4>
+                <p>CSI Faculty Coordinator</p>
+              </div>
+
+              <div className="organizer-card">
+                <h4>Himanshu Verma</h4>
+                <p>CSI Student Coordinator</p>
+              </div>
             </div>
 
-            <div className="organizer-card">
-              <h4>Prof. Varalkshmi K V</h4>
-              <p>Ideathon Coordinator</p>
-              <p>Department of CSE</p>
-            </div>
+            <div className="organizers-bottom">
+              <div className="organizer-card">
+                <h4>Prof. Varalkshmi K V</h4>
+                <p>Ideathon Coordinator</p>
+                <p>Department of CSE</p>
+              </div>
 
-            <div className="organizer-card">
-              <h4>Prof. Raghu P</h4>
-              <p>Tech Symposium &amp; TechQuizz Coordinator</p>
-              <p>Department of ISE</p>
-            </div>
+              <div className="organizer-card">
+                <h4>Prof. Raghu P</h4>
+                <p>Tech Symposium &amp; TechQuizz Coordinator</p>
+                <p>Department of ISE</p>
+                <p>
+                  <a href="mailto:raghu.ise@cambridge.edu.in">raghu.ise@cambridge.edu.in</a>
+                </p>
+              </div>
 
-            <div className="organizer-card">
-              <h4>Prof. Anusha</h4>
-              <p>Poster Presentation Coordinator</p>
-              <p>Department of AIML</p>
-            </div>
+              <div className="organizer-card">
+                <h4>Prof. Anusha</h4>
+                <p>Poster Presentation Coordinator</p>
+                <p>Department of AIML</p>
+              </div>
 
-            <div className="organizer-card">
-              <h4>Prof. Laxmi</h4>
-              <p>Programming Contest Coordinator</p>
-              <p>Department of IoT &amp; Cyber Security</p>
+              <div className="organizer-card">
+                <h4>Prof. Laxmi Jayannavar</h4>
+                <p>Programming Contest Coordinator</p>
+                <p>Department of IoT &amp; Cyber Security</p>
+                <p>
+                  <a href="tel:+918971533373">+91 89715 33373</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>

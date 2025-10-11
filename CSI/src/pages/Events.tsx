@@ -55,6 +55,7 @@ const Events = () => {
       ],
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Raghu P",
+  coordinatorEmail: "raghu.ise@cambridge.edu.in",
       studentCoordinators: [
         { name: 'K. Lakshmi Navyatha', phone: '+91 9980609374', email: 'navyatha.ise23@cambridge.edu.in' },
         { name: 'Spandana S', phone: '+91 8073875184', email: 'spandana.23ise@cambridge.edu.in' }
@@ -147,6 +148,7 @@ const Events = () => {
       ],
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Laxmi",
+  coordinatorPhone: "+91 89715 33373",
       studentCoordinators: [
         { name: 'Naga Tejaswini', phone: '+91 7204023676', email: 'tejaswini.23iot@cambridge.edu.in' },
         { name: 'Naresh Karthigeyan', phone: '+91 7676661396', email: 'naresh.23iot@cambridge.edu.in' }

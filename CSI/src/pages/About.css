@@ -81,7 +81,7 @@
 
 .purpose-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   max-width: 1000px;
   margin: 0 auto;
@@ -97,6 +97,32 @@
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow-light);
   border: 1px solid var(--card-border);
+}
+
+.purpose-card.bento {
+  grid-column: span 1;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  border-radius: 18px;
+}
+
+.purpose-card.bento .purpose-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.purpose-card.bento h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.purpose-card.bento p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
 }
 
 .purpose-card:hover {
@@ -145,10 +171,10 @@
 
 .activity-item {
   background: var(--card-bg);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
+  padding: 2.25rem;
+  margin-bottom: 1.75rem;
   border-radius: 20px;
-  box-shadow: 0 4px 15px var(--shadow-light);
+  box-shadow: 0 6px 22px var(--shadow-light);
   border-left: 4px solid var(--primary-color);
   border: 1px solid var(--card-border);
   transition: all 0.3s ease;

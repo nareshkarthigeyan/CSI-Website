@@ -470,10 +470,30 @@
 
 .organizers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.organizers-top {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.organizers-top .organizer-card {
+  flex: 1 1 320px;
+  max-width: 420px;
+}
+
+.organizers-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 1.75rem;
 }
 
 .organizer-card {
@@ -482,7 +502,7 @@
     rgba(255, 255, 255, 0.95),
     rgba(242, 249, 255, 0.95)
   );
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   text-align: center;
   border-left: 4px solid rgba(14, 165, 233, 0.12);
@@ -492,13 +512,14 @@
 }
 
 .organizer-card h4 {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   margin-bottom: 0.35rem;
   color: var(--primary-dark);
 }
 .organizer-card p {
-  margin: 0.35rem 0;
+  margin: 0.45rem 0;
   color: var(--text-secondary);
+  font-size: 1rem;
 }
 .organizer-card p:first-of-type {
   font-weight: 700;
@@ -550,9 +571,9 @@
 
 /* Tablet Responsive */
 @media (max-width: 1024px) and (min-width: 769px) {
-  .organizers-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5rem;
+  .organizers-bottom {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .organizer-card {

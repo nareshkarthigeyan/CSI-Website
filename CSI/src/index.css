@@ -77,22 +77,6 @@ html, body {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  font-family: inherit;
-  line-height: inherit;
-  color: inherit;
-  background-color: inherit;
-}
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 /* Base Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
@@ -100,9 +84,41 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-dark);
 }
 
-p {
-  line-height: 1.6;
-  color: var(--text-light);
+/* Make primary headings more prominent across the site */
+h1 {
+  font-size: 3rem; /* larger main headings */
+}
+
+h2 {
+  font-size: 2.25rem; /* section headings */
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Hero stats spacing and sizing */
+.hero-stats {
+  display: flex;
+  gap: 2.5rem; /* increased spacing between stats */
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+.hero-stats li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.hero-stats li strong {
+  font-size: 1.6rem; /* make the numbers larger */
+  color: var(--primary-dark);
+}
+.hero-stats li span {
+  font-size: 1rem;
+  color: var(--text-secondary);
 }
 
 /* Base Link Styles */
