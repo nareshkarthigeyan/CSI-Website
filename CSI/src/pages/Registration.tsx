@@ -3,6 +3,7 @@ import eventRules from "../lib/eventRules";
 import "./Registration.css";
 import useInView from "../hooks/useInView";
 import AnimatedNumber from "../components/AnimatedNumber";
+import axios from "axios";
 
 interface FormData {
   fullName: string;
@@ -66,6 +67,7 @@ const Registration = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverResponse, setServerResponse] = useState<any | null>(null);
 
   const departments = ["CSE", "ISE", "IOT", "AIML"];
   const semesters = ["1st Sem", "3rd Sem", "5th Sem", "7th Sem"];
@@ -304,22 +306,22 @@ const Registration = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Store registration data (in real app, this would be sent to backend)
-      const registrationData = {
-        ...formData,
-        registrationId: `CSI${Date.now()}`,
-        registrationDate: new Date().toISOString(),
-      };
-
-      console.log("Registration Data:", registrationData);
-
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error("Registration failed:", error);
-      // Handle error (show error message)
+      // POST to server API
+      const payload = { ...formData, submittedAt: new Date().toISOString() };
+  // POST to relative path so when deployed on Vercel the /api/register serverless function is used
+  const res = await axios.post('/api/register', payload, { headers: { 'Content-Type': 'application/json' } });
+      if (res.data && res.data.success) {
+        setServerResponse(res.data);
+        setIsSubmitted(true);
+      } else {
+        console.error("Server rejected registration", res.data);
+        setErrors({ form: "Registration failed on server" });
+      }
+    } catch (err) {
+      type AxiosErr = { message?: string; response?: { data?: { error?: string } } };
+      const error = err as AxiosErr;
+      console.error("Registration failed:", (error && error.message) || err);
+      setErrors((prev) => ({ ...prev, form: (error?.response?.data?.error) || (error?.message) || 'Registration failed: server error' }));
     } finally {
       setIsSubmitting(false);
     }
@@ -358,44 +360,105 @@ const Registration = () => {
       <div className="registration">
         <section className="success-section">
           <div className="container">
-            <div className="success-card">
+            <div className="success-card" id="registration-ticket">
               <div className="success-icon">🎉</div>
-              <h1>Registration Successful!</h1>
-              <p>Thank you for registering for CSI Event 2025</p>
+              <h1>Registration Confirmed</h1>
+              <p className="muted">
+                Your registration has been stored. Please download your ticket
+                below — it will NOT be sent by email.
+              </p>
+
               <div className="registration-details">
-                <h3>Registration Details:</h3>
+                <h3>Registration Summary</h3>
                 <p>
-                  <strong>Name:</strong> {formData.fullName}
+                  <strong>Registration No:</strong>{" "}
+                  {serverResponse?.registrationNumber || "—"}
                 </p>
                 <p>
-                  <strong>USN:</strong> {formData.usn}
+                  <strong>Submitted At:</strong>{" "}
+                  {serverResponse?.saved?.createdAt
+                    ? new Date(serverResponse.saved.createdAt).toLocaleString()
+                    : new Date().toLocaleString()}
                 </p>
                 <p>
-                  <strong>Department:</strong> {formData.department}
-                </p>
-                <p>
-                  <strong>Selected Activity:</strong>{" "}
+                  <strong>Event:</strong>{" "}
                   {
                     activities.find((a) => a.id === formData.selectedActivity)
                       ?.name
                   }
                 </p>
                 <p>
-                  <strong>Registration ID:</strong> CSI{Date.now()}
+                  <strong>Team Name:</strong> {formData.teamName || "-"}
                 </p>
+
+                <h4>Leader</h4>
+                <p>
+                  {formData.leaderName} • {formData.leaderUsn}
+                </p>
+                <p>
+                  {formData.leaderPhone} • {formData.leaderEmail}
+                </p>
+                <p>
+                  {formData.leaderDepartment} • {formData.leaderSemester}
+                </p>
+
+                {formData.members && formData.members.length > 0 && (
+                  <>
+                    <h4>Members</h4>
+                    {formData.members.map((m, i) => (
+                      <div key={i} className="member-summary">
+                        <p>
+                          <strong>{m.name}</strong> — {m.usn} • {m.department} •{" "}
+                          {m.semester}
+                        </p>
+                        <p>
+                          {m.phone} • {m.email}
+                        </p>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                <div className="ticket-actions">
+                  <button
+                    className="download-ticket"
+                    onClick={async () => {
+                      // dynamic import to keep bundle small
+                      const { default: html2canvas } = await import(
+                        "html2canvas"
+                      );
+                      const jsPDF = (await import("jspdf")).default;
+                      const el = document.getElementById("registration-ticket");
+                      if (!el) return;
+                      const canvas = await html2canvas(el, { scale: 2 });
+                      const imgData = canvas.toDataURL("image/png");
+                      const pdf = new jsPDF({
+                        orientation: "portrait",
+                        unit: "pt",
+                        format: "a4",
+                      });
+                      const pageWidth = pdf.internal.pageSize.getWidth();
+                      // scale image to fit width
+                      const imgProps = pdf.getImageProperties(imgData);
+                      const imgWidth = pageWidth - 80;
+                      const imgHeight =
+                        (imgProps.height * imgWidth) / imgProps.width;
+                      pdf.addImage(imgData, "PNG", 40, 40, imgWidth, imgHeight);
+                      pdf.save(
+                        `${
+                          serverResponse?.registrationNumber || "CSI-TICKET"
+                        }.pdf`
+                      );
+                    }}
+                  >
+                    Download CSI Registration Ticket (PDF)
+                  </button>
+
+                  <button onClick={resetForm} className="register-another-btn">
+                    Register Another
+                  </button>
+                </div>
               </div>
-              <div className="next-steps">
-                <h3>What's Next?</h3>
-                <ul>
-                  <li>You will receive a confirmation email shortly</li>
-                  <li>Check your email for event updates and guidelines</li>
-                  <li>Join our WhatsApp group for real-time updates</li>
-                  <li>Arrive 30 minutes before your event start time</li>
-                </ul>
-              </div>
-              <button onClick={resetForm} className="register-another-btn">
-                Register Another Participant
-              </button>
             </div>
           </div>
         </section>
@@ -746,6 +809,7 @@ const Registration = () => {
             )}
 
             {/* Submit Button */}
+            {errors.form && <div className="form-error-banner">{errors.form}</div>}
             <div className="form-submit">
               <button
                 type="submit"

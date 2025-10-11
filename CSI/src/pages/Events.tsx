@@ -172,10 +172,10 @@ const Events = () => {
 
     {
       id: "programming-contest",
-        name: "Programming Contest",
-        icon: "",
-        duration: "Varied (3 rounds)",
-        teamSize: "Team (2 - 4)",
+      name: "Programming Contest",
+      icon: "",
+      duration: "Varied (3 rounds)",
+      teamSize: "Team (2 - 4)",
       description:
         "The Flagship Event of CSI CIT Chapter. Like the world-renowned Inter-Collegiate Programming Contest (ICPC), it is a multi-round programming contest designed to test problem solving across beginner to very hard levels. Rounds include Beginner, Intermediate, and Hard see rules below.",
       rules: [
