@@ -105,7 +105,7 @@ const Registration = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverRegistration, setServerRegistration] = useState<RegistrationView | null>(null);
 
-  const departments = ["CSE", "ISE", "IOT", "AIML"];
+  const departments = ["CSE", "ISE", "IOT", "AIML", "ECE", "EEE", "CV", "ME"];
   const semesters = ["1st Sem", "3rd Sem", "5th Sem", "7th Sem"];
   const activities = React.useMemo(
     () => [

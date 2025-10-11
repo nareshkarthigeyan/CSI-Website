@@ -107,9 +107,9 @@ const Layout = ({ children }: LayoutProps) => {
               <p>Cambridge Institute of Technology</p>
               <p>Bangalore, Karnataka, India</p>
               <p>
-                <a href="/contact/" className="footer-contact-link">
+                <Link to="/contact" className="footer-contact-link" onClick={closeMobileMenu}>
                   Contact Us
-                </a>
+                </Link>
               </p>
             </div>
             <div className="footer-section">
@@ -121,6 +121,9 @@ const Layout = ({ children }: LayoutProps) => {
             <p>
               &copy; 2025 Cambridge Institute of Technology. All rights
               reserved.
+            </p>
+            <p style={{marginTop:6, fontSize:12, color:'#999'}}>
+              This website and backend developed by <a href="https://github.com/nareshkarthigeyan" target="_blank" rel="noopener noreferrer">naresh</a>.
             </p>
           </div>
         </div>

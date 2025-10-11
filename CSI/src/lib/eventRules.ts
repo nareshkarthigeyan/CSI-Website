@@ -42,7 +42,6 @@ export const eventRules: Record<string, { name: string; rules: string[] }> = {
   "programming-contest": {
     name: "Programming Contest",
     rules: [
-      "Team-based contest: teams of up to 3 members (including the leader)",
       "Round 1: Beginner: 45 mins, 5 problems, 10 pts each, passing threshold 30 pts (qualify to Round 2)",
       "Round 2: Intermediate: 60 mins, 4 problems, partial scoring (10/20), wrong-submission penalty -2 per test file, passing threshold 60 pts",
       "Round 3: Hard: 90 mins, 3 problems (from pool of 5), partial & bonus scoring (15/35 + up to 10 bonus), wrong-submission penalty -5 per test file; tie-break by lower total AC time",
