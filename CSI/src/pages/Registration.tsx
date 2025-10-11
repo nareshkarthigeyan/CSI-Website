@@ -3,14 +3,49 @@ import eventRules from "../lib/eventRules";
 import "./Registration.css";
 import useInView from "../hooks/useInView";
 import AnimatedNumber from "../components/AnimatedNumber";
-import axios from "axios";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
+interface ParticipantView {
+  id: number;
+  is_leader: boolean;
+  full_name: string;
+  usn?: string | null;
+  department?: string | null;
+  semester?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+
+// Registration view returned from server
+interface RegistrationView {
+  id: number;
+  registration_number?: string | null;
+  event_name?: string | null;
+  team_name?: string | null;
+  participants?: ParticipantView[] | null;
+}
+interface MemberPayload {
+  full_name: string;
+  usn?: string | null;
+  department?: string | null;
+  semester?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+interface ServerResponse {
+  registration?: RegistrationView;
+  registration_number?: string;
+  id?: number;
+  error?: string;
+}
 interface FormData {
   fullName: string;
   usn: string;
   department: string;
   semester: string;
   phoneNumber: string;
+  email?: string;
   selectedActivity: string;
   groupMembers: string;
   teamName?: string;
@@ -52,6 +87,7 @@ const Registration = () => {
     department: "",
     semester: "",
     phoneNumber: "",
+    email: "",
     selectedActivity: "",
     groupMembers: "",
     teamName: "",
@@ -67,7 +103,7 @@ const Registration = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [serverResponse, setServerResponse] = useState<any | null>(null);
+  const [serverRegistration, setServerRegistration] = useState<RegistrationView | null>(null);
 
   const departments = ["CSE", "ISE", "IOT", "AIML"];
   const semesters = ["1st Sem", "3rd Sem", "5th Sem", "7th Sem"];
@@ -306,22 +342,111 @@ const Registration = () => {
     setIsSubmitting(true);
 
     try {
-      // POST to server API
-      const payload = { ...formData, submittedAt: new Date().toISOString() };
-  // POST to relative path so when deployed on Vercel the /api/register serverless function is used
-  const res = await axios.post('/api/register', payload, { headers: { 'Content-Type': 'application/json' } });
-      if (res.data && res.data.success) {
-        setServerResponse(res.data);
-        setIsSubmitted(true);
-      } else {
-        console.error("Server rejected registration", res.data);
-        setErrors({ form: "Registration failed on server" });
+      // Build payload
+      const payload = {
+        event_slug: formData.selectedActivity,
+        team_name: formData.teamName || null,
+        leader: {
+          full_name: formData.leaderName || formData.fullName,
+          usn: formData.leaderUsn || formData.usn,
+          department: formData.leaderDepartment || formData.department,
+          semester: formData.leaderSemester || formData.semester,
+          phone: formData.leaderPhone || formData.phoneNumber,
+          email: formData.leaderEmail || formData.email || undefined,
+        },
+        members: (formData.members || []).map((m) => ({
+          full_name: m.name,
+          usn: m.usn,
+          department: m.department,
+          semester: m.semester,
+          phone: m.phone,
+          email: m.email,
+        })),
+        metadata: {},
+      };
+
+      // Try serverless endpoint first
+      let resp: Response | null = null;
+  let json: unknown = null;
+      try {
+        resp = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (err) {
+        console.warn('Failed to reach /api/register', err);
+        resp = null;
       }
-    } catch (err) {
-      type AxiosErr = { message?: string; response?: { data?: { error?: string } } };
-      const error = err as AxiosErr;
-      console.error("Registration failed:", (error && error.message) || err);
-      setErrors((prev) => ({ ...prev, form: (error?.response?.data?.error) || (error?.message) || 'Registration failed: server error' }));
+
+      if (resp && resp.ok) {
+        try { json = await resp.json(); } catch { json = null; }
+        const body = json as ServerResponse | null;
+        if (body && body.registration) setServerRegistration(body.registration as RegistrationView);
+        else if (body && body.registration_number) setServerRegistration({ registration_number: body.registration_number, id: body.id } as RegistrationView);
+        setIsSubmitted(true);
+        return;
+      }
+
+      // If serverless missing (local dev), fallback to REST calls against Supabase if VITE envs provided
+      if ((!resp || resp.status === 404) && import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        const SUPA_URL = import.meta.env.VITE_SUPABASE_URL as string;
+        const SUPA_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+        // lookup event by slug
+        const evResp = await fetch(`${SUPA_URL}/rest/v1/events?slug=eq.${encodeURIComponent(payload.event_slug)}`, {
+          headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` },
+        });
+        const evJson = await evResp.json();
+        const ev = Array.isArray(evJson) && evJson.length ? evJson[0] : null;
+        if (!ev) { setErrors({ general: 'Event not found' }); return; }
+
+        // create registration
+        const regResp = await fetch(`${SUPA_URL}/rest/v1/registrations`, {
+          method: 'POST',
+          headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+          body: JSON.stringify([{ event_id: ev.id, team_name: payload.team_name || null, metadata: {} }]),
+        });
+        const regJson = await regResp.json();
+        const reg = Array.isArray(regJson) && regJson.length ? regJson[0] : null;
+        if (!reg) { setErrors({ general: 'Failed to create registration (fallback)' }); return; }
+        const regId = reg.id;
+
+        const participantsPayloads: MemberPayload[] = [
+          { full_name: payload.leader.full_name, usn: payload.leader.usn || null, department: payload.leader.department || null, semester: payload.leader.semester || null, phone: payload.leader.phone || null, email: payload.leader.email || null },
+        ];
+        const otherMembers = (payload.members || []) as MemberPayload[];
+        const participantsExtras = otherMembers.map((m) => ({ full_name: m.full_name, usn: m.usn || null, department: m.department || null, semester: m.semester || null, phone: m.phone || null, email: m.email || null }));
+        // participantsPayloads will be combined with registration_id on the server via REST insert by adding registration_id when sending
+        const participantsPayloadsWithReg = [
+          { ...participantsPayloads[0], registration_id: regId, is_leader: true },
+          ...participantsExtras.map((p) => ({ ...p, registration_id: regId, is_leader: false })),
+        ];
+
+        await fetch(`${SUPA_URL}/rest/v1/participants`, {
+          method: 'POST',
+          headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+          body: JSON.stringify(participantsPayloadsWithReg),
+        });
+
+        const savedResp = await fetch(`${SUPA_URL}/rest/v1/registration_with_participants?id=eq.${regId}`, { headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` } });
+        const savedJson = await savedResp.json();
+  const saved = Array.isArray(savedJson) && savedJson.length ? (savedJson[0] as RegistrationView) : null;
+  setServerRegistration(saved || ({ registration_number: reg.registration_number, id: regId, event_name: ev.name, team_name: reg.team_name } as RegistrationView));
+        setIsSubmitted(true);
+        return;
+      }
+
+      // otherwise show error
+      if (resp) {
+        try { json = await resp.json(); } catch { json = null; }
+        const body = json as ServerResponse | null;
+        setErrors({ general: (body && body.error) || `Registration failed (status ${resp.status})` });
+      } else {
+        setErrors({ general: 'Registration endpoint unreachable' });
+      }
+    } catch (error) {
+      console.error('Registration failed:', error);
+      setErrors({ general: 'Unexpected error during registration' });
     } finally {
       setIsSubmitting(false);
     }
@@ -356,108 +481,74 @@ const Registration = () => {
   // (added at top via patch)
 
   if (isSubmitted) {
+    // Render server-side registration if available, otherwise show form data summary
+    const reg = serverRegistration;
     return (
       <div className="registration">
         <section className="success-section">
           <div className="container">
-            <div className="success-card" id="registration-ticket">
+            <div className="success-card">
               <div className="success-icon">🎉</div>
-              <h1>Registration Confirmed</h1>
-              <p className="muted">
-                Your registration has been stored. Please download your ticket
-                below — it will NOT be sent by email.
-              </p>
-
+              <h1>Registration Successful!</h1>
+              <p>Thank you for registering for CSI Event 2025</p>
               <div className="registration-details">
-                <h3>Registration Summary</h3>
-                <p>
-                  <strong>Registration No:</strong>{" "}
-                  {serverResponse?.registrationNumber || "—"}
-                </p>
-                <p>
-                  <strong>Submitted At:</strong>{" "}
-                  {serverResponse?.saved?.createdAt
-                    ? new Date(serverResponse.saved.createdAt).toLocaleString()
-                    : new Date().toLocaleString()}
-                </p>
-                <p>
-                  <strong>Event:</strong>{" "}
-                  {
-                    activities.find((a) => a.id === formData.selectedActivity)
-                      ?.name
-                  }
-                </p>
-                <p>
-                  <strong>Team Name:</strong> {formData.teamName || "-"}
-                </p>
-
-                <h4>Leader</h4>
-                <p>
-                  {formData.leaderName} • {formData.leaderUsn}
-                </p>
-                <p>
-                  {formData.leaderPhone} • {formData.leaderEmail}
-                </p>
-                <p>
-                  {formData.leaderDepartment} • {formData.leaderSemester}
-                </p>
-
-                {formData.members && formData.members.length > 0 && (
+                <h3>Registration Details:</h3>
+                {reg ? (
                   <>
-                    <h4>Members</h4>
-                    {formData.members.map((m, i) => (
-                      <div key={i} className="member-summary">
-                        <p>
-                          <strong>{m.name}</strong> — {m.usn} • {m.department} •{" "}
-                          {m.semester}
-                        </p>
-                        <p>
-                          {m.phone} • {m.email}
-                        </p>
+                    <p><strong>Registration ID:</strong> {reg.registration_number}</p>
+                    <p><strong>Event:</strong> {reg.event_name || activities.find(a=>a.id===formData.selectedActivity)?.name}</p>
+                    {reg.team_name && <p><strong>Team:</strong> {reg.team_name}</p>}
+                    <div>
+                      <h4>Members</h4>
+                      <div style={{display:'grid', gap:8}}>
+                        {((reg.participants || []) as ParticipantView[]).map((p) => (
+                          <div key={p.id} style={{padding:8, borderRadius:8, background:'#fbfbff'}}>
+                            <strong>{p.full_name}{p.is_leader? ' (Leader)': ''}</strong>
+                            <div>USN: {p.usn || '-'}</div>
+                            <div>Dept: {p.department || '-'}</div>
+                            <div>Sem: {p.semester || '-'}</div>
+                            <div>Phone: {p.phone || '-'}</div>
+                            <div>Email: {p.email || '-'}</div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p><strong>Name:</strong> {formData.fullName}</p>
+                    <p><strong>USN:</strong> {formData.usn}</p>
+                    <p><strong>Department:</strong> {formData.department}</p>
+                    <p><strong>Selected Activity:</strong> {activities.find((a) => a.id === formData.selectedActivity)?.name}</p>
                   </>
                 )}
+              </div>
+              <div className="next-steps">
+                <h3>What's Next?</h3>
+                <ul>
+                  <li>Please download your ticket below — it will NOT be mailed.</li>
+                  <li>Check your email for event updates and guidelines</li>
+                  <li>Join our WhatsApp group for real-time updates</li>
+                  <li>Arrive 30 minutes before your event start time</li>
+                </ul>
+              </div>
+              <div style={{display:'flex', gap:12, marginTop:12}}>
+                <button onClick={async ()=>{
+                  // download ticket
+                  const el = document.querySelector('.success-card') as HTMLElement | null;
+                  if (!el) return;
+                  const canvas = await html2canvas(el, { scale: 2 });
+                  const imgData = canvas.toDataURL('image/png');
+                  const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+                  const pageWidth = pdf.internal.pageSize.getWidth();
+                  // compute size from canvas
+                  const imgWidth = pageWidth - 40;
+                  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                  pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+                  pdf.save(`${reg?.registration_number || 'CSI-registration'}.pdf`);
+                }} className="submit-btn">Download Ticket as PDF</button>
 
-                <div className="ticket-actions">
-                  <button
-                    className="download-ticket"
-                    onClick={async () => {
-                      // dynamic import to keep bundle small
-                      const { default: html2canvas } = await import(
-                        "html2canvas"
-                      );
-                      const jsPDF = (await import("jspdf")).default;
-                      const el = document.getElementById("registration-ticket");
-                      if (!el) return;
-                      const canvas = await html2canvas(el, { scale: 2 });
-                      const imgData = canvas.toDataURL("image/png");
-                      const pdf = new jsPDF({
-                        orientation: "portrait",
-                        unit: "pt",
-                        format: "a4",
-                      });
-                      const pageWidth = pdf.internal.pageSize.getWidth();
-                      // scale image to fit width
-                      const imgProps = pdf.getImageProperties(imgData);
-                      const imgWidth = pageWidth - 80;
-                      const imgHeight =
-                        (imgProps.height * imgWidth) / imgProps.width;
-                      pdf.addImage(imgData, "PNG", 40, 40, imgWidth, imgHeight);
-                      pdf.save(
-                        `${
-                          serverResponse?.registrationNumber || "CSI-TICKET"
-                        }.pdf`
-                      );
-                    }}
-                  >
-                    Download CSI Registration Ticket (PDF)
-                  </button>
-
-                  <button onClick={resetForm} className="register-another-btn">
-                    Register Another
-                  </button>
-                </div>
+                <button onClick={resetForm} className="register-another-btn">Register Another Participant</button>
               </div>
             </div>
           </div>
@@ -605,6 +696,18 @@ const Registration = () => {
                           {errors.phoneNumber}
                         </span>
                       )}
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email || ""}
+                        onChange={handleInputChange}
+                        placeholder="you@example.com"
+                      />
                     </div>
                   </div>
                 )}
@@ -809,7 +912,6 @@ const Registration = () => {
             )}
 
             {/* Submit Button */}
-            {errors.form && <div className="form-error-banner">{errors.form}</div>}
             <div className="form-submit">
               <button
                 type="submit"
