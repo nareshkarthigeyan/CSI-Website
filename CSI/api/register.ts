@@ -1,14 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.warn('Supabase env vars not set for serverless function');
-}
-
-const supabase = createClient(SUPABASE_URL as string, SUPABASE_KEY as string);
+// Do NOT create the Supabase client at module-import time because missing envs here
+// will crash the serverless function during import (observed in Vercel logs).
+// We'll create the client inside the handler after verifying env vars.
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   console.log('[api/register] invoked', { time: new Date().toISOString(), method: req.method, url: req.url });
@@ -18,13 +16,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const payload = req.body;
+    if (!SUPABASE_URL || !SUPABASE_KEY) {
+      console.error('[api/register] Supabase env missing', { SUPABASE_URL: !!process.env.SUPABASE_URL, SUPABASE_KEY: !!process.env.SUPABASE_KEY });
+      return res.status(500).json({ error: 'Server misconfigured: SUPABASE_URL or SUPABASE_KEY missing' });
+    }
+    const supabase = createClient(SUPABASE_URL as string, SUPABASE_KEY as string);
+
+  type IncomingMember = { full_name: string; usn?: string | null; department?: string | null; semester?: string | null; phone?: string | null; email?: string | null };
+  type IncomingPayload = { event_slug: string; team_name?: string | null; leader: IncomingMember; members?: IncomingMember[]; metadata?: Record<string, unknown> };
+  const payload = req.body as IncomingPayload;
     // Log payload shape (but avoid sensitive data)
     try {
-      const safePayload = { ...payload } as any;
-      // redact potential large fields
-      if (safePayload.metadata) safePayload.metadata = '[redacted]';
-      console.log('[api/register] payload', JSON.stringify(safePayload));
+  const safePayload: Partial<IncomingPayload> = { ...payload };
+  // redact potential large fields by replacing with an object marker
+  if (safePayload.metadata) safePayload.metadata = { redacted: true } as Record<string, unknown>;
+  console.log('[api/register] payload', JSON.stringify(safePayload));
     } catch (e) {
       console.log('[api/register] payload logging failed', String(e));
     }
@@ -77,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         phone: leader.phone || null,
         email: leader.email || null,
       },
-      ...members.map((m: any) => ({
+  ...members.map((m: IncomingMember) => ({
         registration_id: regId,
         is_leader: false,
         full_name: m.full_name,
@@ -97,8 +103,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error('[api/register] participants insert failed', partsErr);
       // rollback
       try {
-        await supabase.from('participants').delete().eq('registration_id', regId);
-        await supabase.from('registrations').delete().eq('id', regId);
+  await supabase.from('participants').delete().eq('registration_id', regId);
+  await supabase.from('registrations').delete().eq('id', regId);
       } catch (rbErr) {
         console.error('[api/register] rollback failed', rbErr);
       }
@@ -120,9 +126,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     console.log('[api/register] returning saved registration view', saved?.id);
     return res.status(201).json({ registration: saved });
-  } catch (err: any) {
-    console.error('[api/register] unexpected error', err && err.stack ? err.stack : err);
-    // Expose minimal info to client but full stack is available in Vercel logs
-    return res.status(500).json({ error: err?.message || 'Internal Server Error' , details: err?.stack ? err.stack.split('\n').slice(0,5).join('\n') : null });
+  } catch (err) {
+    const unknownErr = err as unknown;
+    if (typeof unknownErr === 'object' && unknownErr !== null && 'stack' in unknownErr) {
+      const errObj = unknownErr as Error;
+      console.error('[api/register] unexpected error', errObj.stack);
+  const stackSnippet = errObj.stack ? errObj.stack.split('\n').slice(0,5).join('\n') : null;
+  return res.status(500).json({ error: errObj.message || 'Internal Server Error', details: stackSnippet });
+    }
+    console.error('[api/register] unexpected error', String(unknownErr));
+    return res.status(500).json({ error: String(unknownErr) || 'Internal Server Error', details: null });
   }
 }

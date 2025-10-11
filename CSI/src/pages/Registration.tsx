@@ -550,6 +550,9 @@ const Registration = () => {
 
                 <button onClick={resetForm} className="register-another-btn">Register Another Participant</button>
               </div>
+              <div style={{marginTop:12, fontSize:12, color:'#666'}}>
+                <p style={{margin:0}}>This entire website and backend system developed by <a href="https://github.com/nareshkarthigeyan" target="_blank" rel="noopener noreferrer">naresh</a>.</p>
+              </div>
             </div>
           </div>
         </section>
