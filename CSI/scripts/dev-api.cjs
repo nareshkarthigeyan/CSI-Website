@@ -2,7 +2,6 @@
 // Usage: SUPABASE_URL=... SUPABASE_KEY=... node scripts/dev-api.cjs
 // Or set VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY
 const http = require('http');
-const fetch = require('node-fetch');
 
 const SUPA_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
 const SUPA_KEY = process.env.SUPABASE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
