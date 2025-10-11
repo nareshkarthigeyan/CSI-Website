@@ -32,7 +32,18 @@ const server = http.createServer((req, res) => {
         });
         const evJson = await evResp.json();
         const ev = Array.isArray(evJson) && evJson.length ? evJson[0] : null;
-        if (!ev) return sendJSON(res, 400, { error: 'Event not found' });
+        if (!ev) {
+          // create a minimal event for local dev
+          const newEvResp = await fetch(`${SUPA_URL}/rest/v1/events`, {
+            method: 'POST',
+            headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+            body: JSON.stringify([{ name: payload.event_slug, slug: payload.event_slug, requires_team: false }]),
+          });
+          const newEvJson = await newEvResp.json();
+          const newEv = Array.isArray(newEvJson) && newEvJson.length ? newEvJson[0] : null;
+          if (!newEv) return sendJSON(res, 500, { error: 'Event not found and failed to create' });
+          ev = newEv;
+        }
 
         // create registration
         const regResp = await fetch(`${SUPA_URL}/rest/v1/registrations`, {
