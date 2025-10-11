@@ -79,7 +79,7 @@ const Home: React.FC = () => {
 
             <h1 className="hero-title">
               CSI Event 2025
-              <span className="title-accent"> — Build. Compete. Connect.</span>
+              <span className="title-accent">Build. Compete. Connect.</span>
             </h1>
 
             <p className="hero-sub">
@@ -186,7 +186,9 @@ const Home: React.FC = () => {
                 <p>Tech Symposium &amp; TechQuizz Coordinator</p>
                 <p>Department of ISE</p>
                 <p>
-                  <a href="mailto:raghu.ise@cambridge.edu.in">raghu.ise@cambridge.edu.in</a>
+                  <a href="mailto:raghu.ise@cambridge.edu.in">
+                    raghu.ise@cambridge.edu.in
+                  </a>
                 </p>
               </div>
 

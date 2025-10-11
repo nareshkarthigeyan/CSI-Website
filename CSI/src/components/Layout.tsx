@@ -86,8 +86,9 @@ const Layout = ({ children }: LayoutProps) => {
               <h4>Contact Information</h4>
               <p>Cambridge Institute of Technology</p>
               <p>Bangalore, Karnataka, India</p>
-              <p>Email: csi@cambridge.edu.in</p>
-              <p>Phone: +91-80-12345678</p>
+              <p>
+                <a href="/contact/" className="footer-contact-link">Contact Us</a>
+              </p>
             </div>
             <div className="footer-section">
               <h4>Follow Us</h4>

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Events.css";
 import useInView from "../hooks/useInView";
+import eventRules from "../lib/eventRules";
 import AnimatedNumber from "../components/AnimatedNumber";
 
 const Events = () => {
@@ -14,7 +15,10 @@ const Events = () => {
       const element = document.getElementById(elementId);
       if (element) {
         // element exists now — scroll to it with a small offset for header
-        const elementPosition = element.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 100;
+        const elementPosition =
+          element.getBoundingClientRect().top +
+          (window.pageYOffset || document.documentElement.scrollTop) -
+          100;
         window.scrollTo({ top: elementPosition, behavior: "smooth" });
       } else {
         // If element isn't present yet (rare when navigating between routes), poll briefly until it's rendered
@@ -23,7 +27,10 @@ const Events = () => {
         const tryScroll = () => {
           const el = document.getElementById(elementId);
           if (el) {
-            const pos = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 100;
+            const pos =
+              el.getBoundingClientRect().top +
+              (window.pageYOffset || document.documentElement.scrollTop) -
+              100;
             window.scrollTo({ top: pos, behavior: "smooth" });
           } else if (attempts < maxAttempts) {
             attempts++;
@@ -43,7 +50,7 @@ const Events = () => {
       name: "Tech Symposium (Pick & Speak)",
       icon: "",
       duration: "2 hours",
-      teamSize: "Individual/Team (2-3)",
+      teamSize: "Individual",
       description:
         "A prestigious platform for students to present their innovative ideas, research findings, and technical projects. Participants will showcase their work through presentations and interactive sessions.",
       rules: [
@@ -55,11 +62,19 @@ const Events = () => {
       ],
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Raghu P",
-  coordinatorEmail: "raghu.ise@cambridge.edu.in",
+      coordinatorEmail: "raghu.ise@cambridge.edu.in",
       studentCoordinators: [
-        { name: 'K. Lakshmi Navyatha', phone: '+91 9980609374', email: 'navyatha.ise23@cambridge.edu.in' },
-        { name: 'Spandana S', phone: '+91 8073875184', email: 'spandana.23ise@cambridge.edu.in' }
-      ]
+        {
+          name: "K. Lakshmi Navyatha",
+          phone: "+91 9980609374",
+          email: "navyatha.ise23@cambridge.edu.in",
+        },
+        {
+          name: "Spandana S",
+          phone: "+91 8073875184",
+          email: "spandana.23ise@cambridge.edu.in",
+        },
+      ],
     },
 
     {
@@ -67,7 +82,7 @@ const Events = () => {
       name: "Ideathon",
       icon: "",
       duration: "6 hours",
-      teamSize: "Team (3-4)",
+      teamSize: "Team (2-4)",
       description:
         "A high-energy innovation challenge where teams brainstorm, design, and prototype solutions to real-world problems within the event timeframe. Teams should prepare a short demo and pitch.",
       rules: [
@@ -80,9 +95,17 @@ const Events = () => {
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Varalkshmi K V",
       studentCoordinators: [
-        { name: 'Abhishek Pattar', phone: '+91 9916265862', email: 'abhishek.24cse@cambridge.edu.in' },
-        { name: 'Swati', phone: '+91 6361451537', email: 'swati.23cse@cambridge.edu.in' }
-      ]
+        {
+          name: "Abhishek Pattar",
+          phone: "+91 9916265862",
+          email: "abhishek.24cse@cambridge.edu.in",
+        },
+        {
+          name: "Swati",
+          phone: "+91 6361451537",
+          email: "swati.23cse@cambridge.edu.in",
+        },
+      ],
     },
 
     {
@@ -90,7 +113,7 @@ const Events = () => {
       name: "TechQuizz",
       icon: "",
       duration: "1.5 hours",
-      teamSize: "Individual/Team (2)",
+      teamSize: "Team (2 - 4)",
       description:
         "A rapid-fire quiz testing knowledge across algorithms, systems, AI/ML, web technologies, and current trends in computing. Multiple rounds will determine finalists.",
       rules: [
@@ -103,9 +126,17 @@ const Events = () => {
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Varalkshmi K V",
       studentCoordinators: [
-        { name: 'Limnisha Sanjana T G', phone: '+91 9731166553', email: 'limnisha.23ise@cambridge.edu.in' },
-        { name: 'Limnisha', phone: '+91 9606077664', email: 'limnisha.23ise@cambridge.edu.in' }
-      ]
+        {
+          name: "Limnisha Sanjana T G",
+          phone: "+91 9731166553",
+          email: "limnisha.23ise@cambridge.edu.in",
+        },
+        {
+          name: "Limnisha",
+          phone: "+91 9606077664",
+          email: "limnisha.23ise@cambridge.edu.in",
+        },
+      ],
     },
 
     {
@@ -113,7 +144,7 @@ const Events = () => {
       name: "Poster Presentation",
       icon: "",
       duration: "3 hours",
-      teamSize: "Individual/Team (2-3)",
+      teamSize: "Team (2-4)",
       description:
         "Present research findings, project outcomes, or case studies through well-designed posters focusing on clarity, visual communication, and impact.",
       rules: [
@@ -126,17 +157,25 @@ const Events = () => {
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Anusha",
       studentCoordinators: [
-        { name: 'Shreya V', phone: '+91 6360516101', email: 'shreya.23aiml@cambridge.edu.in' },
-        { name: 'Jaijan S', phone: '+91 9538045415', email: 'jaijan.23aiml@cambridge.edu.in' }
-      ]
+        {
+          name: "Shreya V",
+          phone: "+91 6360516101",
+          email: "shreya.23aiml@cambridge.edu.in",
+        },
+        {
+          name: "Jaijan S",
+          phone: "+91 9538045415",
+          email: "jaijan.23aiml@cambridge.edu.in",
+        },
+      ],
     },
 
     {
       id: "programming-contest",
-      name: "Programming Contest",
-      icon: "",
-      duration: "Varied (3 rounds)",
-      teamSize: "Individual",
+        name: "Programming Contest",
+        icon: "",
+        duration: "Varied (3 rounds)",
+        teamSize: "Team (2 - 4)",
       description:
         "The Flagship Event of CSI CIT Chapter. Like the world-renowned Inter-Collegiate Programming Contest (ICPC), it is a multi-round programming contest designed to test problem solving across beginner to very hard levels. Rounds include Beginner, Intermediate, and Hard see rules below.",
       rules: [
@@ -148,11 +187,19 @@ const Events = () => {
       ],
       prizes: ["Winner: ₹3000", "1st Runner-up: ₹2000", "2nd Runner-up: ₹1000"],
       coordinator: "Prof. Laxmi",
-  coordinatorPhone: "+91 89715 33373",
+      coordinatorPhone: "+91 89715 33373",
       studentCoordinators: [
-        { name: 'Naga Tejaswini', phone: '+91 7204023676', email: 'tejaswini.23iot@cambridge.edu.in' },
-        { name: 'Naresh Karthigeyan', phone: '+91 7676661396', email: 'naresh.23iot@cambridge.edu.in' }
-      ]
+        {
+          name: "Naga Tejaswini",
+          phone: "+91 7204023676",
+          email: "tejaswini.23iot@cambridge.edu.in",
+        },
+        {
+          name: "Naresh Karthigeyan",
+          phone: "+91 7676661396",
+          email: "naresh.23iot@cambridge.edu.in",
+        },
+      ],
     },
   ];
 
@@ -220,9 +267,11 @@ const Events = () => {
                 <div className="event-rules">
                   <h3>Rules & Guidelines</h3>
                   <ul>
-                    {event.rules.map((rule, ruleIndex) => (
-                      <li key={ruleIndex}>{rule}</li>
-                    ))}
+                    {(eventRules[event.id]?.rules || event.rules || []).map(
+                      (rule, ruleIndex) => (
+                        <li key={ruleIndex}>{rule}</li>
+                      )
+                    )}
                   </ul>
                 </div>
 
@@ -252,10 +301,14 @@ const Events = () => {
                             <li key={i}>
                               <div className="student-entry">
                                 <span className="student-name">
-                                  {sc.name} — <a href={`tel:${sc.phone}`}>{sc.phone}</a>
+                                  {sc.name} —{" "}
+                                  <a href={`tel:${sc.phone}`}>{sc.phone}</a>
                                 </span>
                                 <br />
-                                <a className="student-email" href={`mailto:${sc.email}`}>
+                                <a
+                                  className="student-email"
+                                  href={`mailto:${sc.email}`}
+                                >
                                   {sc.email}
                                 </a>
                               </div>

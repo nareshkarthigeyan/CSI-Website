@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import eventRules from "../lib/eventRules";
 import "./Registration.css";
 import useInView from "../hooks/useInView";
 import AnimatedNumber from "../components/AnimatedNumber";
@@ -18,7 +19,14 @@ interface FormData {
   leaderUsn?: string;
   leaderDepartment?: string;
   leaderSemester?: string;
-  members?: { name: string; phone?: string; email?: string; usn?: string; department?: string; semester?: string }[];
+  members?: {
+    name: string;
+    phone?: string;
+    email?: string;
+    usn?: string;
+    department?: string;
+    semester?: string;
+  }[];
 }
 
 interface FormErrors {
@@ -67,7 +75,11 @@ const Registration = () => {
       { id: "ideathon", name: "Ideathon", requiresTeam: true },
       { id: "tech-quiz", name: "Technical Quiz", requiresTeam: true },
       { id: "poster", name: "Poster Presentation", requiresTeam: true },
-      { id: "programming-contest", name: "Programming Contest", requiresTeam: true },
+      {
+        id: "programming-contest",
+        name: "Programming Contest",
+        requiresTeam: true,
+      },
     ],
     []
   );
@@ -116,7 +128,14 @@ const Registration = () => {
       // members array represents additional members besides the leader.
       // Total team size = leader + members. Enforce max total 4 => members max 3
       if (members.length >= 3) return prev;
-      members.push({ name: "", phone: "", email: "", usn: "", department: "", semester: "" });
+      members.push({
+        name: "",
+        phone: "",
+        email: "",
+        usn: "",
+        department: "",
+        semester: "",
+      });
       return { ...prev, members };
     });
   };
@@ -136,7 +155,14 @@ const Registration = () => {
       setFormData((prev) => {
         const members = prev.members ? [...prev.members] : [];
         if (members.length === 0) {
-          members.push({ name: "", phone: "", email: "", usn: "", department: "", semester: "" });
+          members.push({
+            name: "",
+            phone: "",
+            email: "",
+            usn: "",
+            department: "",
+            semester: "",
+          });
           return { ...prev, members };
         }
         return prev;
@@ -145,7 +171,7 @@ const Registration = () => {
   }, [formData.selectedActivity, activities]);
 
   const validateForm = (): boolean => {
-  const newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
 
     // Full Name validation
     if (!formData.fullName.trim()) {
@@ -192,17 +218,24 @@ const Registration = () => {
       if (!formData.leaderName || !formData.leaderName.trim()) {
         newErrors.leaderName = "Team leader name is required";
       }
-      if (!formData.leaderPhone || !/^[6-9]\d{9}$/.test(formData.leaderPhone || "")) {
+      if (
+        !formData.leaderPhone ||
+        !/^[6-9]\d{9}$/.test(formData.leaderPhone || "")
+      ) {
         newErrors.leaderPhone = "Valid leader phone is required";
       }
-      if (!formData.leaderEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.leaderEmail || "")) {
+      if (
+        !formData.leaderEmail ||
+        !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.leaderEmail || "")
+      ) {
         newErrors.leaderEmail = "Valid leader email is required";
       }
       // Leader USN/Department/Semester validations
       if (!formData.leaderUsn || !formData.leaderUsn.trim()) {
         newErrors.leaderUsn = "Leader USN is required";
       } else if (!/^[A-Za-z0-9]{10,15}$/.test(formData.leaderUsn.trim())) {
-        newErrors.leaderUsn = "Leader USN must be 10-15 alphanumeric characters";
+        newErrors.leaderUsn =
+          "Leader USN must be 10-15 alphanumeric characters";
       }
 
       if (!formData.leaderDepartment) {
@@ -218,21 +251,33 @@ const Registration = () => {
             newErrors[`member_${idx}`] = `Member ${idx + 1} name is required`;
           }
           if (!m.usn || !m.usn.trim()) {
-            newErrors[`member_${idx}_usn`] = `Member ${idx + 1} USN is required`;
+            newErrors[`member_${idx}_usn`] = `Member ${
+              idx + 1
+            } USN is required`;
           } else if (!/^[A-Za-z0-9]{10,15}$/.test(m.usn.trim())) {
-            newErrors[`member_${idx}_usn`] = `Member ${idx + 1} USN must be 10-15 alphanumeric characters`;
+            newErrors[`member_${idx}_usn`] = `Member ${
+              idx + 1
+            } USN must be 10-15 alphanumeric characters`;
           }
           if (!m.department) {
-            newErrors[`member_${idx}_department`] = `Member ${idx + 1} department is required`;
+            newErrors[`member_${idx}_department`] = `Member ${
+              idx + 1
+            } department is required`;
           }
           if (!m.semester) {
-            newErrors[`member_${idx}_semester`] = `Member ${idx + 1} semester is required`;
+            newErrors[`member_${idx}_semester`] = `Member ${
+              idx + 1
+            } semester is required`;
           }
           if (m.phone && !/^[6-9]\d{9}$/.test(m.phone)) {
-            newErrors[`member_${idx}_phone`] = `Member ${idx + 1} phone is invalid`;
+            newErrors[`member_${idx}_phone`] = `Member ${
+              idx + 1
+            } phone is invalid`;
           }
           if (m.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m.email)) {
-            newErrors[`member_${idx}_email`] = `Member ${idx + 1} email is invalid`;
+            newErrors[`member_${idx}_email`] = `Member ${
+              idx + 1
+            } email is invalid`;
           }
         });
       }
@@ -240,7 +285,8 @@ const Registration = () => {
       // enforce minimum team size (leader + at least 1 member)
       const memberCount = formData.members ? formData.members.length : 0;
       if (memberCount < 1) {
-        newErrors.teamSize = "Team events require at least 2 people (leader + 1 member)";
+        newErrors.teamSize =
+          "Team events require at least 2 people (leader + 1 member)";
       }
     }
 
@@ -303,6 +349,9 @@ const Registration = () => {
   const selectedActivityInfo = activities.find(
     (activity) => activity.id === formData.selectedActivity
   );
+
+  // import shared rules map
+  // (added at top via patch)
 
   if (isSubmitted) {
     return (
@@ -449,7 +498,9 @@ const Registration = () => {
                         ))}
                       </select>
                       {errors.department && (
-                        <span className="error-message">{errors.department}</span>
+                        <span className="error-message">
+                          {errors.department}
+                        </span>
                       )}
                     </div>
 
@@ -487,7 +538,9 @@ const Registration = () => {
                         maxLength={10}
                       />
                       {errors.phoneNumber && (
-                        <span className="error-message">{errors.phoneNumber}</span>
+                        <span className="error-message">
+                          {errors.phoneNumber}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -503,15 +556,19 @@ const Registration = () => {
                   {selectedActivityInfo?.id === "pick-speak" && (
                     <ul>
                       <li>Individual presentations only — 5 to 7 minutes.</li>
-                      <li>Topics: emerging technologies, innovations, or research.</li>
+                      <li>
+                        Topics: emerging technologies, innovations, or research.
+                      </li>
                       <li>Judged on clarity, relevance and delivery.</li>
                     </ul>
                   )}
-                  {selectedActivityInfo?.requiresTeam && (
+                  {selectedActivityInfo && (
                     <ul>
-                      <li>Team size: up to 4 members (including leader).</li>
-                      <li>One team leader must be provided with contact details.</li>
-                      <li>Teams must register with a team name.</li>
+                      {(eventRules[selectedActivityInfo.id]?.rules || []).map(
+                        (r, i) => (
+                          <li key={i}>{r}</li>
+                        )
+                      )}
                     </ul>
                   )}
                 </div>
@@ -523,7 +580,11 @@ const Registration = () => {
               <div className="team-section">
                 <div className="form-group">
                   <label>Team Name *</label>
-                  <input name="teamName" value={formData.teamName || ""} onChange={handleTeamField} />
+                  <input
+                    name="teamName"
+                    value={formData.teamName || ""}
+                    onChange={handleTeamField}
+                  />
                 </div>
 
                 <div className="leader-block">
@@ -531,35 +592,64 @@ const Registration = () => {
                   <div className="form-grid">
                     <div className="form-group">
                       <label>Leader Name *</label>
-                      <input name="leaderName" value={formData.leaderName || ""} onChange={handleTeamField} />
+                      <input
+                        name="leaderName"
+                        value={formData.leaderName || ""}
+                        onChange={handleTeamField}
+                      />
                     </div>
                     <div className="form-group">
                       <label>Leader Phone *</label>
-                      <input name="leaderPhone" value={formData.leaderPhone || ""} onChange={handleTeamField} />
+                      <input
+                        name="leaderPhone"
+                        value={formData.leaderPhone || ""}
+                        onChange={handleTeamField}
+                      />
                     </div>
                     <div className="form-group">
                       <label>Leader Email *</label>
-                      <input name="leaderEmail" value={formData.leaderEmail || ""} onChange={handleTeamField} />
+                      <input
+                        name="leaderEmail"
+                        value={formData.leaderEmail || ""}
+                        onChange={handleTeamField}
+                      />
                     </div>
                     <div className="form-group">
                       <label>Leader USN *</label>
-                      <input name="leaderUsn" value={formData.leaderUsn || ""} onChange={handleTeamField} style={{ textTransform: "uppercase" }} />
+                      <input
+                        name="leaderUsn"
+                        value={formData.leaderUsn || ""}
+                        onChange={handleTeamField}
+                        style={{ textTransform: "uppercase" }}
+                      />
                     </div>
                     <div className="form-group">
                       <label>Leader Department *</label>
-                      <select name="leaderDepartment" value={formData.leaderDepartment || ""} onChange={handleTeamField}>
+                      <select
+                        name="leaderDepartment"
+                        value={formData.leaderDepartment || ""}
+                        onChange={handleTeamField}
+                      >
                         <option value="">Select Department</option>
                         {departments.map((d) => (
-                          <option key={d} value={d}>{d}</option>
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
                         ))}
                       </select>
                     </div>
                     <div className="form-group">
                       <label>Leader Semester *</label>
-                      <select name="leaderSemester" value={formData.leaderSemester || ""} onChange={handleTeamField}>
+                      <select
+                        name="leaderSemester"
+                        value={formData.leaderSemester || ""}
+                        onChange={handleTeamField}
+                      >
                         <option value="">Select Semester</option>
                         {semesters.map((s) => (
-                          <option key={s} value={s}>{s}</option>
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -570,29 +660,70 @@ const Registration = () => {
                   <h4>Members</h4>
                   {(formData.members || []).map((m, idx) => (
                     <div key={idx} className="member-row">
-                      <input placeholder="Name" value={m.name} onChange={(e) => handleMemberChange(idx, 'name', e.target.value)} />
-                      <input placeholder="USN" value={m.usn} onChange={(e) => handleMemberChange(idx, 'usn', e.target.value)} style={{ textTransform: 'uppercase' }} />
-                      <select value={m.department || ''} onChange={(e) => handleMemberChange(idx, 'department', e.target.value)}>
+                      <input
+                        placeholder="Name"
+                        value={m.name}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "name", e.target.value)
+                        }
+                      />
+                      <input
+                        placeholder="USN"
+                        value={m.usn}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "usn", e.target.value)
+                        }
+                        style={{ textTransform: "uppercase" }}
+                      />
+                      <select
+                        value={m.department || ""}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "department", e.target.value)
+                        }
+                      >
                         <option value="">Dept</option>
                         {departments.map((d) => (
-                          <option key={d} value={d}>{d}</option>
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
                         ))}
                       </select>
-                      <select value={m.semester || ''} onChange={(e) => handleMemberChange(idx, 'semester', e.target.value)}>
+                      <select
+                        value={m.semester || ""}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "semester", e.target.value)
+                        }
+                      >
                         <option value="">Sem</option>
                         {semesters.map((s) => (
-                          <option key={s} value={s}>{s}</option>
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
                         ))}
                       </select>
-                      <input placeholder="Phone" value={m.phone} onChange={(e) => handleMemberChange(idx, 'phone', e.target.value)} />
-                      <input placeholder="Email" value={m.email} onChange={(e) => handleMemberChange(idx, 'email', e.target.value)} />
+                      <input
+                        placeholder="Phone"
+                        value={m.phone}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "phone", e.target.value)
+                        }
+                      />
+                      <input
+                        placeholder="Email"
+                        value={m.email}
+                        onChange={(e) =>
+                          handleMemberChange(idx, "email", e.target.value)
+                        }
+                      />
                       <button
                         type="button"
                         onClick={() => removeMember(idx)}
                         className="remove-member"
                         disabled={
-                          activities.find((a) => a.id === formData.selectedActivity)
-                            ?.requiresTeam && (formData.members || []).length <= 1
+                          activities.find(
+                            (a) => a.id === formData.selectedActivity
+                          )?.requiresTeam &&
+                          (formData.members || []).length <= 1
                         }
                       >
                         Remove
@@ -601,7 +732,13 @@ const Registration = () => {
                   ))}
 
                   <div className="member-actions">
-                    <button type="button" onClick={addMember} disabled={(formData.members || []).length >= 4}>+ Add Member</button>
+                    <button
+                      type="button"
+                      onClick={addMember}
+                      disabled={(formData.members || []).length >= 4}
+                    >
+                      + Add Member
+                    </button>
                     <small>Up to 4 members allowed</small>
                   </div>
                 </div>
@@ -619,7 +756,9 @@ const Registration = () => {
               </button>
             </div>
             <div className="disclaimer">
-              <strong>Disclaimer:</strong> If you register for more than one event, please note that the organizers are not responsible for schedule conflicts, overlapping timings, or missed rounds.
+              <strong>Disclaimer:</strong> If you register for more than one
+              event, please note that the organizers are not responsible for
+              schedule conflicts, overlapping timings, or missed rounds.
             </div>
           </form>
         </div>
