@@ -60,6 +60,25 @@ const ActivityCard: React.FC<{ activity: (typeof activities)[number] }> = ({
   );
 };
 
+const OrganizerCard: React.FC<{ name: string; position?: string; dept?: string; email?: string; phone?: string }> = ({ name, position, dept, email, phone }) => {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.12 });
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div ref={ref as React.RefObject<HTMLDivElement>} className={`organizer-card ${inView ? 'reveal' : 'hidden'}`}>
+      <div className="card-header" role="button" tabIndex={0} onClick={() => setOpen(s=>!s)} onKeyDown={(e)=>{ if(e.key==='Enter'||e.key===' ') setOpen(s=>!s); }} aria-expanded={open}>
+        <h4>{name}</h4>
+        <div className="card-toggle" aria-hidden>{open? '−' : '+'}</div>
+      </div>
+      <div className={`card-content ${open ? 'open' : 'closed'}`}>
+        {position && <p>{position}</p>}
+        {dept && <p>{dept}</p>}
+        {email && <p><a href={`mailto:${email}`}>{email}</a></p>}
+        {phone && <p><a href={`tel:${phone}`}>{phone}</a></p>}
+      </div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
   // parallax hook removed — background logo will be handled by CSS
 
@@ -163,49 +182,19 @@ const Home: React.FC = () => {
           <h2>Event Coordinators</h2>
           <div className="organizers-grid">
             <div className="organizers-top">
-              <div className="organizer-card">
-                <h4>Prof. Lakshmishree MS</h4>
-                <p>CSI Faculty Coordinator</p>
-              </div>
+              <OrganizerCard name="Prof. Lakshmishree MS" position="CSI Faculty Coordinator" />
 
-              <div className="organizer-card">
-                <h4>Himanshu Verma</h4>
-                <p>CSI Student Coordinator</p>
-              </div>
+              <OrganizerCard name="Himanshu Verma" position="CSI Student Coordinator" />
             </div>
 
             <div className="organizers-bottom">
-              <div className="organizer-card">
-                <h4>Prof. Varalkshmi K V</h4>
-                <p>Ideathon Coordinator</p>
-                <p>Department of CSE</p>
-              </div>
+              <OrganizerCard name="Prof. Varalkshmi K V" position="Ideathon Coordinator" dept="Department of CSE" />
 
-              <div className="organizer-card">
-                <h4>Prof. Raghu P</h4>
-                <p>Tech Symposium &amp; TechQuizz Coordinator</p>
-                <p>Department of ISE</p>
-                <p>
-                  <a href="mailto:raghu.ise@cambridge.edu.in">
-                    raghu.ise@cambridge.edu.in
-                  </a>
-                </p>
-              </div>
+              <OrganizerCard name="Prof. Raghu P" position="Tech Symposium & TechQuizz Coordinator" dept="Department of ISE" email="raghu.ise@cambridge.edu.in" />
 
-              <div className="organizer-card">
-                <h4>Prof. Anusha</h4>
-                <p>Poster Presentation Coordinator</p>
-                <p>Department of AIML</p>
-              </div>
+              <OrganizerCard name="Prof. Anusha" position="Poster Presentation Coordinator" dept="Department of AIML" />
 
-              <div className="organizer-card">
-                <h4>Prof. Laxmi Jayannavar</h4>
-                <p>Programming Contest Coordinator</p>
-                <p>Department of IoT &amp; Cyber Security</p>
-                <p>
-                  <a href="tel:+918971533373">+91 89715 33373</a>
-                </p>
-              </div>
+              <OrganizerCard name="Prof. Laxmi Jayannavar" position="Programming Contest Coordinator" dept="Department of IoT & Cyber Security" phone="+918971533373" />
             </div>
           </div>
         </div>

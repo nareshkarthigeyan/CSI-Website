@@ -490,14 +490,20 @@
 }
 
 .organizers-top .organizer-card {
-  flex: 1 1 320px;
+  flex: 1 1 280px;
   max-width: 420px;
+}
+
+/* allow top row to wrap when space is limited */
+.organizers-top {
+  flex-wrap: wrap;
 }
 
 .organizers-bottom {
   display: grid;
-  grid-template-columns: repeat(4, minmax(260px, 1fr));
-  gap: 1.75rem;
+  /* allow cards to wrap responsively: auto-fit will add columns as space allows */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
 }
 
 .organizer-card {

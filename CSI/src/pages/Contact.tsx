@@ -152,15 +152,29 @@ const CoordinatorCard: React.FC<{ coordinator: Coordinator }> = ({
     return () => window.removeEventListener("resize", onResize);
   }, [coordinator.email]);
 
+  const [open, setOpen] = useState(false);
+
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`coordinator-card ${inView ? "reveal" : "hidden"}`}
     >
-      <div className="card-header">
+      <div
+        className="card-header"
+        role="button"
+        tabIndex={0}
+        onClick={() => setOpen((s) => !s)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") setOpen((s) => !s);
+        }}
+        aria-expanded={open}
+      >
         <h3>{coordinator.activity}</h3>
+        <div className="card-toggle" aria-hidden>
+          {open ? "−" : "+"}
+        </div>
       </div>
-      <div className="card-content">
+      <div className={`card-content ${open ? 'open' : 'closed'}`}>
         <div className="coordinator-info">
           <h4>{coordinator.name}</h4>
           <p className="position">{coordinator.position}</p>

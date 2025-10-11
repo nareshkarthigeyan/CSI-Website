@@ -144,6 +144,32 @@ html {
   padding: 2.5rem;
 }
 
+/* Collapsible content behaviour */
+.event-content.closed {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease, padding 300ms ease;
+}
+.event-content.open {
+  max-height: 2000px; /* large enough to contain content */
+  transition: max-height 400ms ease, padding 300ms ease;
+}
+
+.event-toggle {
+  margin-left: auto;
+  font-size: 1.6rem;
+  color: rgba(255,255,255,0.95);
+  background: rgba(0,0,0,0.08);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .event-description {
   margin-bottom: 2rem;
   text-align: left;

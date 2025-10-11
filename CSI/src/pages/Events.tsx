@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Events.css";
 import useInView from "../hooks/useInView";
@@ -43,6 +43,11 @@ const Events = () => {
   }, [location]);
 
   const [heroRef, heroInView] = useInView<HTMLElement>({ threshold: 0.12 });
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  const toggleOpen = (id: string) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
 
   const eventDetails = [
     {
@@ -245,7 +250,16 @@ const Events = () => {
         <div className="container">
           {eventDetails.map((event) => (
             <div key={event.id} id={event.id} className="event-card">
-              <div className="event-header">
+              <div
+                className="event-header"
+                role="button"
+                tabIndex={0}
+                onClick={() => toggleOpen(event.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") toggleOpen(event.id);
+                }}
+                aria-expanded={openId === event.id}
+              >
                 <div className="event-icon">{event.icon}</div>
                 <div className="event-basic-info">
                   <h2>{event.name}</h2>
@@ -254,9 +268,12 @@ const Events = () => {
                     <span className="team-size">{event.teamSize}</span>
                   </div>
                 </div>
+                <div className="event-toggle" aria-hidden>
+                  {openId === event.id ? "−" : "+"}
+                </div>
               </div>
 
-              <div className="event-content">
+              <div className={`event-content ${openId === event.id ? 'open' : 'closed'}`}>
                 <div className="event-description">
                   <h3>About</h3>
                   <div className="about-content">

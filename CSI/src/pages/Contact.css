@@ -68,15 +68,27 @@
   margin: 0 auto;
 }
 
+.coordinators-top {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 980px;
+  margin: 0 auto;
+  flex-wrap: wrap; /* allow wrapping on narrower screens */
+}
+
 .coordinators-top .coordinator-card {
-  flex: 1 1 420px;
-  max-width: 520px;
+  flex: 1 1 240px; /* allow cards to shrink earlier */
+  min-width: 220px;
+  max-width: 420px;
 }
 
 .coordinators-bottom {
   display: grid;
-  grid-template-columns: repeat(4, minmax(220px, 1fr));
-  gap: 1.25rem;
+  /* auto-fit columns so cards wrap to next row when space runs out */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
 }
 
 .coordinator-card {
@@ -109,6 +121,25 @@
 
 .card-content {
   padding: 2rem;
+}
+
+/* Collapsible coordinator card content */
+.card-content.closed {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease, padding 300ms ease;
+}
+.card-content.open {
+  max-height: 1500px;
+  transition: max-height 400ms ease, padding 300ms ease;
+}
+
+.card-toggle {
+  margin-left: 8px;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
 }
 
 .coordinator-info {
